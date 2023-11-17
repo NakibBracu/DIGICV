@@ -1,0 +1,478 @@
+﻿@using DigiCV.Domain.Entities;
+@model UserProfileModel
+@inject ResumeViewModel resumeViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+@section Styles
+{
+    <style>
+        .link-custom {
+            color: black;
+        }
+
+        .link-custom:hover {
+            text-decoration: none;
+            color: #007bff;
+            cursor: pointer;
+        }
+    </style>
+    <link rel="stylesheet" href="~/lib/croppieFiles/croppie.css" /> <!-- Update the path -->
+}
+
+<section>
+    <div class="container py-5">
+        <partial name="_ResponsePartial" />
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        @if (Model?.UserProfile?.ImageUrl != null)
+                        {
+                            <img id="profile-image-show" src="~/@Model.ProfileImageFolder/@Model.UserProfile.ImageUrl" alt="avatar" class="rounded-circle img-fluid" style="width: 100px;">
+                        }
+                        else{
+                            <img id="profile-image-show" src="~/images/corporate-user-icon.png" alt="avatar" class="rounded-circle img-fluid" style="width: 100px;">
+                        }
+                            <h5 class="my-2">@Model.FullName</h5>
+                        <p class="text-muted mb-2">@Model.UserProfile.Designation</p>
+                        <button id="profile-image-change" class="btn btn-primary">Change</button>
+                    </div>
+                </div>
+                <div class="card mb-4 mb-lg-0">
+                    <div class="card-body">
+                        <strong><i class="fas fa-book mr-1"></i> Education</strong>
+
+                        <p class="text-muted">
+                            @Model.UserProfile.Education
+                        </p>
+
+                        <hr>
+
+                        <strong><i class="fa fa-briefcase mr-1"></i> Experiences</strong>
+
+                        <p class="text-muted">@Model.UserProfile.Experience</p>
+
+                        <hr>
+                        <strong><i class="fab fa-github mr-1"></i> Github</strong>
+
+                        <p class="text-muted"><a href="@Model.UserProfile.GithubUsername" target="_blank">@Model.UserProfile.GithubUsername?.Substring(Model.UserProfile.GithubUsername.LastIndexOf('/')+1)</a></p>
+
+                        <hr>
+                        <strong><i class="fab fa-linkedin mr-1"></i> Linked In</strong>
+
+                        <p class="text-muted"><a href="@Model.UserProfile.LinkedInUsername" target="_blank">@Model.UserProfile.LinkedInUsername?.Substring(Model.UserProfile.LinkedInUsername.LastIndexOf('/')+1)</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header p-2" style="background-color: white;">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="#recent" data-toggle="tab">Recent</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#profile" data-toggle="tab">Profile</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li>
+                        </ul>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class=" tab-pane" id="profile">
+                                <!-- Post -->
+                                <div class="post">
+                                    <div class="border-0">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="text-dark mb-0">Full Name</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted mb-0">@Model.FullName</p>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="text-dark mb-0">Designation</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted mb-0">@Model.UserProfile.Designation</p>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="text-dark mb-0">Email</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted mb-0">@Model.Email</p>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="text-dark mb-0">Contact</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted mb-0">@Model.PhoneNumber</p>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="text-dark mb-0">Joining Date</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted mb-0">@Model.JoiningDate</p>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="text-dark mb-0">Address</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted mb-0">@Model.UserProfile.Address</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.post -->
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane active" id="recent">
+                                <div class="container border">
+                                    <h5 class="my-3 ml-2">
+                                        My Resumes
+                                        <span>
+                                            <a asp-area="" asp-controller="Template" asp-action="Index" class="btn btn-outline-success float-right">Create New Resume</a>
+                                        </span>
+                                    </h5>
+                                    <div class="my-4">
+                                        @if (Model.Resumes == null || Model.Resumes.Count < 1)
+                                        {
+                                            <h3 class="text-center">You have no Resumes</h3>
+                                        }
+                                        else
+                                        {
+                                            <table id="resumeTable" class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-50">Title</th>
+                                                        <th class="text-center w-50">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        var resumeIndex = 0;
+                                                    }
+                                                    @foreach(var resume in Model.Resumes)
+                                                    {
+                                                        resumeIndex++;
+                                                        <tr>
+                                                            <td>
+                                                                <h6 class="my-2"><span class="">@resumeIndex</span>. <a asp-action="GetResume" asp-controller="Builder" asp-route-id="@resume.Id" class="link-custom">
+                                                                        @if (resume.Title != null)
+                                                                        {
+                                                                           <span>@resume.Title</span>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span>Resume @resumeIndex</span>
+                                                                        }
+                                                                    </a></h6>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <a asp-action="GetResume" asp-controller="Builder" asp-route-id="@resume.Id" class="btn btn-sm btn-outline-primary my-1" data-toggle="tooltip"
+                                                                   data-placement="top" title="View Resume">
+                                                                    <i class="fa fa-eye"></i>
+                                                                </a>
+                                                         
+                                                                <a asp-controller="Builder" asp-action="UpdateResume" asp-route-resumeId="@resume.Id"  class="btn btn-sm btn-outline-secondary my-1" id="@resume.Id" data-toggle="tooltip"
+                                                                        data-placement="top" title="Edit">
+                                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                                </a>
+                                                                <a asp-controller="Template" asp-action="ChangeTemplate" asp-route-resumeId="@resume.Id" class="btn btn-sm btn-outline-warning my-1" data-toggle="tooltip"
+                                                                        data-placement="top" title="Change Template">
+                                                                    <i class="fa fa-file"></i>
+                                                                </a>
+                                                                <a asp-action="Share" asp-controller="Resume" class="btn btn-sm btn-outline-info my-1" asp-route-resumeTitle="@resume.Title.Replace(' ', '-')" asp-route-username="@Model.UserName" data-toggle="tooltip"
+                                                                        data-placement="top" title="Share">
+                                                                    <i class=" fa-solid fa-share-from-square">
+                                                                    </i>
+                                                                </a>
+                                                                <a class="deleteResume btn btn-sm btn-outline-danger my-1" data-id="@resume.Id" data-toggle="tooltip"
+                                                                   data-placement="top" title="Delete" >
+                                                                    <i class="fa-regular fa-trash-can"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="mb-3"></div>
+                                <div class="container border">
+                                    <h5 class="my-3 ml-2">
+                                        My Cover Letters
+                                        <span>
+                                            <a asp-controller="Letter" asp-action="Create" class="btn btn-outline-success float-right">Create New Letter</a>
+                                        </span>
+                                    </h5>
+                                    <div class="my-4">
+                                        @if (Model.CoverLetters == null || Model.CoverLetters.Count < 1)
+                                        {
+                                            <h3 class="text-center">You have no Cover Letters</h3>
+                                        }
+                                        else
+                                        {
+                                            <table id="coverLetterTable" class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-50">Title</th>
+                                                        <th class="text-center w-50">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        var coverLetterIndex = 0;
+                                                    }
+                                                    @foreach (var coverLetter in Model.CoverLetters)
+                                                    {
+                                                        coverLetterIndex++;
+                                                        <tr>
+                                                            <td>
+                                                                <h6 class="my-2">
+                                                                    <span class="">@coverLetterIndex</span>. <a asp-action="GetCoverLetter" asp-controller="Letter" asp-route-id="@coverLetter.Id" class="link-custom">
+                                                                        @if (coverLetter.Title != null)
+                                                                        {
+                                                                            <span>@coverLetter.Title</span>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span>Cover Letter @coverLetter</span> 
+                                                                        }
+                                                                    </a>
+                                                                </h6>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <a asp-action="GetCoverLetter" asp-controller="Letter" asp-route-id="@coverLetter.Id" class="btn btn-sm btn-outline-primary my-1" data-toggle="tooltip"
+                                                                   data-placement="top" title="View Resume">
+                                                                    <i class="fa fa-eye"></i>
+                                                                </a>
+
+                                                                <a asp-controller="Letter" asp-action="Update" asp-route-id="@coverLetter.Id" class="btn btn-sm btn-outline-secondary my-1" id="@coverLetter.Id" data-toggle="tooltip"
+                                                                   data-placement="top" title="Edit">
+                                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                                </a>
+@*                                                                <a asp-controller="Letter" asp-action="GetPdf" asp-route-id="@coverLetter.Id" class="btn btn-sm btn-outline-success my-1" id="@coverLetter.Id" data-toggle="tooltip"
+                                                                data-placement="top" title="Download PDF">
+                                                                    <i class="fa-solid fa-file-arrow-down"></i>
+                                                                </a>*@
+                                                                <a data-id="@coverLetter.Id" class="deleteCoverLetter btn btn-sm btn-outline-danger my-1" data-toggle="tooltip"
+                                                                   data-placement="top" title="Delete">
+                                                                    <i class="fa-regular fa-trash-can"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="settings">
+                                <form class="form-horizontal" asp-action="UpdateUserProfile" asp-action="Account" method="post", asp-antiforgery="true">
+                                    <div class="form-group row">
+                                        <label asp-for="FullName" class="col-sm-2 col-form-label"></label>
+                                        <div class="col-sm-10">
+                                            <input type="text" asp-for=FullName class="form-control" id="inputName" placeholder="@Model.FullName">
+                                            <span asp-validation-for="FullName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+                                        <div class="col-sm-10">
+                                            <input type="email" asp-for=Email class="form-control" id="inputEmail" placeholder="@Model.Email" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for=PhoneNumber for="inputContact" class="col-sm-2 col-form-label">Contact</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" asp-for=PhoneNumber pattern="(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})" title="Valid Bangladeshi Number Required" class="form-control" id="inputContact" placeholder="@Model.PhoneNumber">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for=UserProfile.Education for="inputEducation" class="col-sm-2 col-form-label">Education</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" asp-for=UserProfile.Education class="form-control" id="inputEducation" placeholder="@Model.UserProfile.Education">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputDesignation" class="col-sm-2 col-form-label">Designation</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" asp-for=UserProfile.Designation class="form-control" id="inputDesignation" placeholder="@Model.UserProfile.Designation">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="UserProfile.Experience" for="inputExperience" class="col-sm-2 col-form-label">Experience</label>
+                                        <div class="col-sm-10">
+                                            <textarea asp-for=UserProfile.Experience class="form-control" id="inputExperience" placeholder="@Model.UserProfile.Experience"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for=UserProfile.Address for="inputAddress" class="col-sm-2 col-form-label">Address</label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="UserProfile.Address" type="text" class="form-control" id="inputAddress" placeholder="@Model.UserProfile.Address">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for=UserProfile.GithubUsername for="inputGithub" class="col-sm-2 col-form-label">GitHub</label>
+                                        <div class="col-sm-10">
+                                            <input type="url" asp-for="UserProfile.GithubUsername" class="form-control" id="inputGithub" placeholder="https://github.com/Username">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for=UserProfile.LinkedInUsername for="inputLinkedIn" class="col-sm-2 col-form-label">LinkedIn</label>
+                                        <div class="col-sm-10">
+                                            <input type="url" asp-for=UserProfile.LinkedInUsername class="form-control" id="inputLinkedIn" placeholder="https://www.linkedin.com/in/Username">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="offset-sm-2 col-sm-10">
+                                            <button type="submit" class="btn btn-danger">Save</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div><!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+    <partial name="_DeleteModalPartial" />
+    <partial name="_ImageResizerPartial" />
+    <partial name="_ValidationScriptsPartial" />
+</section>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+
+    <script>
+        $('#profile-image-change').on('click', function () {
+            $('#imageCropModal').modal('show');
+        });
+    </script>
+    <!--Cropper Js -->
+    <script src="~/lib/croppieFiles/croppie.min.js"></script>
+    <script>
+        var basic = $('#main-cropper').croppie
+            ({
+                viewport: { width: 300, height: 300 },
+                boundary: { width: 350, height: 350 },
+                showZoomer: true,
+                enableOrientation: true,
+                format: 'png',//'jpeg'|'png'|'webp'
+            });
+
+        // Function to rotate the image 90 degrees clockwise
+        function rotateImage() {
+            $('#main-cropper').croppie('rotate', 90); // Rotate the image by 90 degrees clockwise
+        }
+
+        // Bind the "Rotate" button click event to the rotateImage function
+        $('#btnrotate').on('click', function () {
+            rotateImage();
+        });
+
+        //Reading the contents of the specified Blob or File
+        function readFile(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#main-cropper').croppie('bind', {
+                        url: e.target.result
+                    });
+
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Change Event to Read file content from File input
+        $('#select').on('change', function () { readFile(this); });
+
+        // Upload button to Post Cropped Image to Store.
+        $('#btnupload').on('click', function () {
+            if ($('#select').val() == '') {
+                alert('Please select an image!');
+                return;
+            }
+            const profileImage = document.getElementById('profile-image-show');
+            basic.croppie('result', 'canvas').then(function (canvas) {
+                profileImage.src = canvas
+            });
+            basic.croppie('result', 'blob').then(function (blob) {
+                var formData = new FormData();
+                formData.append('blob', blob, 'profile.png');
+                var UrlSettings =
+                {
+                    ProfileImageUploadUrl: '@Url.Action("UpdateUserProfileImage", "Account")'
+                }
+
+                var request = new XMLHttpRequest();
+                request.open('POST', UrlSettings.ProfileImageUploadUrl);
+                request.send(formData);
+                request.onreadystatechange = function () { // Call a function when the state changes.
+                    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                        var response = JSON.parse(request.responseText);
+
+                        if (response.message == "OK") {
+                            window.location.reload();
+                        }
+
+                        if (response.message == "ERROR") {
+                            window.location.reload();
+                        }
+                    }
+                }
+            });
+        });
+
+    </script>
+    <script>
+        $('#resumeTable').on('click', '.deleteResume', function (event) {
+            var id = $(this).data("id");
+            var modal = $("#deleteModal");
+            $("#deleteId").val(id);
+            $("#deleteForm").attr("action", "/Resume/delete");
+            modal.modal('show');
+        });
+        $('#coverLetterTable').on('click', '.deleteCoverLetter', function (event) {
+            var id = $(this).data("id");
+            var modal = $("#deleteModal");
+            $("#deleteId").val(id);
+            $("#deleteForm").attr("action", "/Letter/delete");
+            modal.modal('show');
+        });
+
+        $("#modalDeleteConfirmButton").click(function () {
+            $("#deleteForm").submit();
+        });
+        
+    </script>
+}

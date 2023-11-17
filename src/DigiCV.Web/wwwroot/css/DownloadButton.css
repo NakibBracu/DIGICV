@@ -1,0 +1,5 @@
+.text-shadow {
+    text-shadow: 1px 1px 1px rgba(1, 1, 1, 0.3);
+    font-weight: bold;
+    color: #333;
+}

@@ -1,0 +1,62 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Confirmation - DigiCV</title>
+    <style>
+
+        /* Define the overall email container */
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+
+        /* Style the content */
+        .content {
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        /* Style the button */
+        .btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        /* Style the footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h2>Email Confirmation - DigiCV</h2>
+        </div>
+        <div class="content">
+            <h3>Hello <#=Name#></h3>
+            <p class="confirmation-message">Thank you for signing up with DigiCV. Please click the button below to confirm your email address:</p>
+            <a href="<#=Link#>" class="btn">Confirm Email</a>
+        </div>
+        <div class="footer">
+            <p>If you did not sign up for our service, please ignore this email.</p>
+        </div>
+    </div>
+</body>
+</html>

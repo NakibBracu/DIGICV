@@ -1,0 +1,154 @@
+﻿@{
+    ViewData["Title"] = "Contact Us";
+}
+@model ContactModel
+@section Styles
+    {
+    <link rel="stylesheet" href="~/css/captcha.css">
+}
+<!--Section: Contact v.2-->
+<section>
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="card col-md-8 mt-5" style="border-radius: .5rem;">
+                <div class="w-25 mx-auto">
+                    <img src="~/images/contact.jpg" class="img-fluid" alt="Sample image">
+                </div>
+                <div class="p-3">
+                    <div class="row">
+                        <!--Grid column-->
+                        <div class="col-md-12 mb-md-0 mb-5 py-2 px-5">
+                            <form id="form" class="form" asp-antiforgery="true" name="contact-form" asp-area="" asp-controller="Home" asp-action="Contact" method="POST">
+                                <partial name="_ResponsePartial" />
+                                <div id="notification" style="display: none; font-size: 24px; "></div>
+
+                                <!--Grid row-->
+                                <div class="row">
+                                    <!--Grid column-->
+                                    <div class="col-md-6">
+                                        <div class="md-form mb-0">
+                                            <label for="name" class="mb-1 ml-1">Your name</label>
+                                            <input type="text" id="name" name="name" class="form-control" placeholder="Write your name..." required>
+                                        </div>
+                                    </div>
+                                    <!--Grid column-->
+                                    <!--Grid column-->
+                                    <div class="col-md-6">
+                                        <div class="md-form mb-0">
+                                            <label asp-for="Email" class="mb-1 ml-1">Your email</label>
+                                            <input type="text" id="email" name="email" class="form-control"
+                                                   placeholder="Write your email..." required>
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <!--Grid column-->
+                                </div>
+                                <!--Grid row-->
+                                <!--Grid row-->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="md-form mb-0">
+                                            <label for="subject" class="mb-1 mt-3 ml-1">Subject</label>
+                                            <input type="text" id="subject" name="subject" class="form-control" placeholder="Which topic?" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Grid row-->
+                                <!--Grid row-->
+                                <div class="row">
+                                    <!--Grid column-->
+                                    <div class="col-md-12">
+                                        <div class="md-form">
+                                            <label for="message" class="mb-1 mt-3 ml-1">Your message</label>
+                                            <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea"
+                                                      placeholder="Write about the problem..." required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Grid row-->
+                                <br />
+                                <div class="g-recaptcha" data-sitekey="6LfpJoUoAAAAALNRRldTc4u8IBugFfUxVVRpHY8s"></div>
+                                <br />
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-primary rounded-pill px-5">SEND</button>
+                                </div>
+                            </form>
+                            <div style="text-align: center;">
+                                <p id="captcha_msg"></p>
+                            </div>
+                        </div>
+                        <!--Grid column-->
+                    </div>
+                </div>
+            </div>
+
+            <!--Grid column-->
+        </div>
+    </div>
+</section>
+
+
+@section Scripts
+{
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="~/js/captcha.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        const form = document.getElementById('form');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            const formData = {
+                name,
+                email,
+                subject,
+                message,
+            };
+
+            fetch('http://localhost:9000/api/v1/Contactmessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+                .then(response => {
+                    console.log('Response:', response);
+                    if (response.ok) {
+                        return;
+                    }
+                    else {
+                        throw new Error('Request failed : HTTP status code 400 or other error status');
+                    }
+                })
+                .then(() => {
+                    var notificationElement = document.getElementById('notification');
+                    notificationElement.textContent = "Message sent! 🌟 We'll get back to you soon, In_sha_Allah!";
+                    notificationElement.style.color = "white"; // White text for contrast
+                    notificationElement.style.backgroundColor = "#004d40"; // A blackish green background
+                    notificationElement.style.border = "2px solid #002e23"; // A darker border color
+                    notificationElement.style.borderRadius = "10px"; // Rounded corners
+                    notificationElement.style.padding = "10px"; // Increased padding for better visibility
+                    notificationElement.style.fontSize = "15px"; // Larger font size for clarity
+                    notificationElement.style.display = "block";
+                })
+                .catch(error => {
+                    var notificationElement = document.getElementById('notification');
+                    notificationElement.textContent = "API project is closed or a JS error has occurred! 🌟 Please run api project";
+                    notificationElement.style.color = "white"; // White text for contrast
+                    notificationElement.style.backgroundColor = "#B22222"; // Dark Red background
+                    notificationElement.style.border = "2px solid #8B0000"; // Darker border color
+                    notificationElement.style.borderRadius = "10px"; // Rounded corners
+                    notificationElement.style.padding = "10px"; // Increased padding for better visibility
+                    notificationElement.style.fontSize = "15px"; // Larger font size for clarity
+                    notificationElement.style.display = "block";
+                });
+        });
+    </script>
+}

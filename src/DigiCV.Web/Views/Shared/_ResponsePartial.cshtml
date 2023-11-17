@@ -1,0 +1,13 @@
+﻿@using DigiCV.Web.Utilities
+
+
+@if (TempData.Peek<ResponseModel>("ResponseMessage") != null)
+{
+    var response = TempData.Get<ResponseModel>("ResponseMessage");
+    <div class="alert alert-@(response.Type.ToString().ToLower()) alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        @response.Message
+    </div>
+}

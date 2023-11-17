@@ -1,0 +1,53 @@
+version: "3"
+services:
+    api:
+        build: 
+            context: .
+            dockerfile: DigiCV.API\Dockerfile
+        image: my-api-image
+        env_file: 
+            - Env/api.env
+        container_name: my-api-container
+        volumes:
+         - my-api-volume:/app/Logs
+        ports:
+          - "9000:80" 
+        entrypoint: ["dotnet", "DigiCV.API.dll"]
+    web:
+        build: 
+            context: .
+            dockerfile: DigiCV.Web\Dockerfile
+        image: my-web-image
+        env_file: 
+            - Env/web.env
+        container_name: my-web-container
+        volumes:
+          - my-web-volume:/app/Logs
+        ports:
+          - "8000:80" 
+        depends_on:
+            - api
+        entrypoint: ["dotnet", "DigiCV.Web.dll"]
+    worker:
+        build: 
+            context: .
+            dockerfile: DigiCV.Worker\Dockerfile
+        image: my-worker-image
+        env_file: 
+            - Env/worker.env
+        container_name: my-worker-container 
+        volumes:
+         - my-worker-volume:/app/Logs
+        depends_on:
+            - api
+            - web
+        entrypoint: ["dotnet", "DigiCV.Worker.dll"]
+        
+
+volumes:
+    my-web-volume:
+        external: true 
+    my-api-volume:
+       external: true 
+    my-worker-volume:
+       external: true 

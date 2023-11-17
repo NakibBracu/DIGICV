@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-DigiCV.EmailWorker-64c3a5e4-5eae-4f40-b899-a96e7a3b4257</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="7.0.1" />
+    <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Logs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DigiCV.Application\DigiCV.Application.csproj" />
+    <ProjectReference Include="..\DigiCV.Domain\DigiCV.Domain.csproj" />
+    <ProjectReference Include="..\DigiCV.Infrastructure\DigiCV.Infrastructure.csproj" />
+    <ProjectReference Include="..\DigiCV.Persistence\DigiCV.Persistence.csproj" />
+  </ItemGroup>
+</Project>

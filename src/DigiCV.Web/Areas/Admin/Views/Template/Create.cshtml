@@ -1,0 +1,61 @@
+﻿@model TemplateCreateModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+@section Styles
+    {
+        <!-- BS Stepper -->
+        <link rel="stylesheet" href="~/adminLte3/plugins/bs-stepper/css/bs-stepper.min.css">
+        <link rel="stylesheet" href="~/adminLte3/plugins/select2/css/select2.min.css">
+        <link rel="stylesheet" href="~/adminLte3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css"> 
+
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Create Template</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form" asp-antiforgery="true" asp-action="Create"
+                      asp-area="Admin" asp-controller="Template" method="post" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <partial name="_ResponsePartial" />
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Name"></label>
+                            <input type="text" class="form-control" asp-for="Name" placeholder="Enter Name">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="imageUpload">Upload Image:</label>
+                            <input type="file" class="form-control-file" id="imageUpload" name="Image">
+                        </div>
+
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.card -->
+
+        </div>
+        <!--/.col (left) -->
+    </div>
+    <!-- /.row -->
+</div><!-- /.container-fluid -->
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" /> 
+}

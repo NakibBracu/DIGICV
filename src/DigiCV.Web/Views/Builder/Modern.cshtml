@@ -1,0 +1,340 @@
+﻿@model ResumeViewModel
+@{
+    ViewData["Title"] = "Modern";
+}
+
+@section Styles{
+    <style>
+
+        .pulse-loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .pulse {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: 0 5px;
+            animation: rotate-pulse 3s linear infinite, pulse 3s infinite ease-in-out;
+        }
+
+            .pulse:nth-child(1) {
+                background-color: #3498db; /* Change to your first preferred color */
+            }
+
+            .pulse:nth-child(2) {
+                background-color: #e74c3c; /* Change to your second preferred color */
+            }
+
+            .pulse:nth-child(3) {
+                background-color: #27ae60; /* Change to your third preferred color */
+            }
+
+        @@keyframes rotate-pulse {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @@keyframes pulse {
+            0%, 100% {
+                transform: scale(0.5);
+            }
+
+            50% {
+                transform: scale(1);
+            }
+        }
+
+        .left_side {
+            background-color: #003147;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            padding: 40px;
+        }
+
+        .right_side {
+            background-color: #ffffff;
+            color: #333;
+            font-family: 'Poppins', sans-serif;
+            padding: 40px;
+        }
+
+        .line {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .icon {
+            font-size: 18px;
+            color: #03a9f4;
+        }
+
+        @@media print {
+            .print-column {
+                display: inline-block;
+                width: 48%;
+                /* Adjust the width as needed */
+                vertical-align: top;
+                page-break-inside: avoid;
+            }
+
+
+
+            .pagebreakNone {
+                page-break-inside: avoid;
+            }
+
+           
+        }
+    </style>
+}
+
+<div class="pulse-loader">
+    <div class="pulse"></div>
+    <div class="pulse"></div>
+    <div class="pulse"></div>
+</div>
+<section class="my-4 py-4">
+    <div class="container mx-auto p-5">
+        <div class="row" style="min-height: 1000px;">
+            <div class="left_side col-md-4">
+                <div class="mt-4 text-center">
+                    <img src="~/ResumeImage/@Model.ResumeProperty.ImageName" alt="Candidate" class="img-fluid rounded-pill " style="width: 200px;">
+                    <h3 class="mt-3 mb-2 font-weight-bold text-uppercase">@Model.ResumeProperty.FullName</h3>
+                    <h5 class="font-weight-lighter mb-4 pb-4 text-uppercase line">
+                        @if (Model.ResumeProperty.Experiences.Any())
+                        {
+                            @Model.ResumeProperty.Experiences.First().Position
+                        }
+                    </h5>
+                </div>
+                <div class="pt-4">
+                    <h4 class="font-weight-bold mb-4" style="font-size: 1.4em; letter-spacing: 1px;">
+                        CONTACT INFO
+                    </h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="fa-solid fa-phone icon"></i>
+                            <span class="ml-3">@Model.ResumeProperty.PhoneNumber</span>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fa-regular fa-envelope icon"></i>
+                            <span class="ml-3">@Model.ResumeProperty.Email</span>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fa-brands fa-skype icon"></i>
+                            <span class="ml-3">@Model.ResumeProperty.Skype</span>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fa-brands fa-linkedin-in icon"></i>
+                            <span class="ml-3">@Model.ResumeProperty.LinkedIn</span>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fa-solid fa-location-dot icon"></i>
+                            <span class="ml-3"> @Model.ResumeProperty.Address</span>
+                        </li>
+                    </ul>
+                </div>
+
+                @if (Model.ResumeProperty.Educations.Count != 0)
+                {
+                    <div class="pt-5">
+                        <h4 class="font-weight-bold mb-4" style="font-size: 1.4em; letter-spacing: 1px;">
+                            EDUCATION
+                        </h4>
+                        <ul class="list-unstyled">
+                            @foreach (var education in Model.ResumeProperty.Educations)
+                            {
+                               
+                                {
+                                    <h6 style="color: #03a9f4;"> @education.PassingYear.ToString("yyyy") -  @($" ({education.Grade})")</h6>
+                                    <h5><small class="font-weight-bold"> @education.Level</small></h5>
+                                    <h5><small> @education.University</small></h5>
+                                }
+                            }
+                        </ul>
+                    </div>
+}
+
+
+                <div class="pt-5">
+                    <h4 class="font-weight-bold mb-4" style="font-size: 1.4em; letter-spacing: 1px;">
+                        EXPERTISE
+                    </h4>
+                    <ul>
+                        @foreach (var skillList in Model.ResumeProperty.Skills)
+                        {
+                            <li>@skillList.Skill.Name</li>
+                        }
+                    </ul>
+                </div>
+                
+               
+            </div>
+
+            
+            <div class="right_side col-md-8">
+                 @if (!string.IsNullOrEmpty(Model.ResumeProperty.Summary))
+                {
+                    <div class="mt-3">
+                        <h4 class="font-weight-bold mb-3"
+                            style="color: #003147; font-size: 1.6em; letter-spacing: 1px;">
+                            PROFILE
+                        </h4>
+                        <p class="text-justify">
+                           @Model.ResumeProperty.Summary
+                        </p>
+                    </div>
+                }
+               
+                @if (Model.ResumeProperty.Experiences.Count != 0)
+                {
+                    <h4 class="font-weight-bold" style="color: #003147; font-size: 1.6em; letter-spacing: 1px;">
+                        EXPERIENCE
+                    </h4>
+                    <div class="row mt-3">
+                        @foreach (var experience in Model.ResumeProperty.Experiences)
+                        {
+                            <div class="col-md-4 text-secondary">
+                                <h5><small>@experience.JoiningDate.ToShortDateString() - @experience.ResignationDate.ToShortDateString()</small></h5>
+                                <h5 class="text-uppercase"><small>@experience.Companay</small></h5>
+                            </div>
+                            <div class="col-md-8">
+                                <h5 class="font-weight-bold text-uppercase" style="color: #2a7da2; font-size: 18px;">
+                                    @experience.Position
+                                </h5>
+                                <ul class="list-unstyled">
+                                    @foreach (var responsibility in experience.Responsibilities)
+                                    {
+                                        <li class="mb-2">
+                                          @responsibility
+                                        </li>
+                                    }                                 
+                                </ul>
+                            </div>
+                        }                        
+                    </div>
+                }
+                
+                 @if (Model.ResumeProperty.Projects.Count != 0)
+                {
+                    <div class="pt-5">
+                        <h4 class="font-weight-bold mb-3"
+                            style="color: #003147; font-size: 1.6em; letter-spacing: 1px;">
+                            PROJECTS
+                        </h4>
+                        <div class="mt-3 mb-2">
+                            @foreach (var project in Model.ResumeProperty.Projects)
+                            {
+                                <h5 class="font-weight-bold" style="font-size: 18px;">
+                                    @project.Name<span class="text-secondary float-right">
+                                       @project.Author
+                                    </span>
+                                </h5>
+                                <p class="text-justify">
+                                    @Html.DisplayFor(modelItem => project.Description)
+                                </p>
+                            }                          
+                        </div>                     
+                    </div>
+                
+                }
+
+                @if (Model.ResumeProperty.Trainings.Count != 0)
+                {
+                    <div class="pt-5">
+                        <h4 class="font-weight-bold mb-3"
+                            style="color: #003147; font-size: 1.6em; letter-spacing: 1px;">
+                            TRAINING
+                        </h4>
+                        <ul>
+                            @foreach (var training in Model.ResumeProperty.Trainings)
+                            {
+                                <li>@training</li>
+                            }
+                        </ul>
+                    </div>
+
+                }
+
+                @if (Model.ResumeProperty.References.Count != 0)
+                {
+                    <h4 class="font-weight-bold mb-3"
+                        style="color: #003147; font-size: 1.6em; letter-spacing: 1px;">
+                        REFERENCE
+                    </h4>
+                    <div class="row">
+                        <table class="table table-borderless">
+                            <tbody>
+                                @{
+                                    var totalReferences = Model.ResumeProperty.References.Count();
+                                    var pairsCount = (int)Math.Ceiling((double)totalReferences / 2);
+                                }
+
+                                @for (var pairIndex = 0; pairIndex < pairsCount; pairIndex++)
+                                {
+                                    <tr>
+                                        @for (var i = pairIndex * 2; i < Math.Min((pairIndex * 2) + 2, totalReferences); i++)
+                                        {
+                                            var reference = Model.ResumeProperty.References.ElementAt(i);
+                                            <td>
+                                                <h5 class="font-weight-bold" style="font-size: 18px; color: #03a9f4;">
+                                                    @reference.Name
+                                                </h5>
+                                                <h5 class="text-secondary" style="font-size: 18px;">
+                                                    @reference.Designation, <span>@reference.Compnay</span>
+                                                </h5>
+                                                <h5 style="font-size: 17px;">
+                                                    <span class="font-weight-bold">Address: </span>@reference.Address
+                                                </h5>
+                                                <h5 style="font-size: 17px;">
+                                                    <span class="font-weight-bold">Email: </span>@reference.Email
+                                                </h5>
+                                                <h5 style="font-size: 17px;">
+                                                    <span class="font-weight-bold">Contact: </span>@reference.PhoneNumber
+                                                </h5>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                }
+              
+            </div>
+               
+            
+            
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script>
+        // Function to hide the loader and display the content
+        function hideLoaderAndShowContent() {
+            // Hide the pre-loader
+            var preloader = document.querySelector('.pulse-loader');
+            preloader.style.display = 'none';
+
+            // Display the content
+            var content = document.querySelector('.content');
+            content.style.display = 'block';
+        }
+
+        // Use the window.onload event to trigger the function when the page finishes loading
+        window.onload = function () {
+            // Simulate a 3-second loading delay (you can replace this with your actual loading logic)
+            setTimeout(hideLoaderAndShowContent, 3000); // 3000 milliseconds = 3 seconds
+        };
+    </script>
+}

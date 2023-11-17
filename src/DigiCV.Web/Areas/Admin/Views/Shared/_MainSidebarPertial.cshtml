@@ -1,0 +1,128 @@
+﻿<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a asp-area="" asp-controller="Home" asp-action="Index" class="brand-link">
+        <img src="~/adminLte3/img/Logo.png" alt="DigiCV Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">DigiCV</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- SidebarSearch Form -->
+        <div class="form-inline">
+            <div class="input-group" data-widget="sidebar-search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-sidebar">
+                        <i class="fas fa-search fa-fw"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                     with font-awesome or any other icon font library -->
+                <li class="nav-item menu-open">
+                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="nav-link active">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Dashboard
+                            @*<i class="right fas fa-angle-left"></i>*@
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <p>
+                            User Management
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            @if (User.HasClaim(c => c.Value == "Administrator"))
+                            {
+                                <a asp-area="Admin" asp-controller="User" asp-action="Index" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Users Table</p>
+                                </a>
+                            }
+                        </li>
+                        <li class="nav-item">
+                            @if (User.HasClaim(c => c.Value == "Administrator"))
+                            {
+                                <a asp-area="Admin" asp-controller="Dashboard" asp-action="UsersRoles" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Users Roles</p>
+                                </a>
+                            }
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <p>
+                            Template Management
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            @if (User.HasClaim(c => c.Value == "Administrator"))
+                            {
+                                <a asp-area="Admin" asp-controller="Template" asp-action="Create" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Create Template</p>
+                                </a>
+                            }
+                        </li>
+                        <li class="nav-item">
+                            @if (User.HasClaim(c => c.Value == "Administrator"))
+                            {
+                                <a asp-area="Admin" asp-controller="Template" asp-action="Index" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Template Table</p>
+                                </a>
+                            }
+                        </li>
+                        
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    @if (User.HasClaim(c => c.Value == "Administrator"))
+                    {
+                        <a asp-area="Admin" asp-controller="SkillManagement" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>Skill Management</p>
+                        </a>
+                    }
+                </li>
+                <li class="nav-item">
+                    @if (User.HasClaim(c => c.Value == "Administrator"))
+                    {
+                        <a asp-area="Admin" asp-controller="Contact" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>User Contact Messages</p>
+                        </a>
+                    }
+                </li>
+
+                <li class="nav-header">Control</li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="nav-icon fas fa-ellipsis-h"></i>
+                        <p>Data</p>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

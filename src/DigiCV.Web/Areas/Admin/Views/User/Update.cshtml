@@ -1,0 +1,47 @@
+﻿
+@model UserUpdateModel
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Update Status</h3>
+                </div>
+                <form role="form" asp-antiforgery="true" asp-action="Update"
+                      asp-area="Admin" asp-controller="User" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="card-body">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="IsActive"></label>
+                            <select class="form-control" asp-for="IsActive" id="isActiveSelect">
+                                <option value="true">Active</option>
+                                <option value="false">InActive</option>
+                            </select>
+                            <span asp-validation-for="IsActive" class="text-danger"></span>
+                        </div>
+                        <input type="hidden" asp-for="Address" />
+                        <input type="hidden" asp-for="Education" />
+                        <input type="hidden" asp-for="Experience" />
+                        <input type="hidden" asp-for="ImageUrl" />
+                        <input type="hidden" asp-for="Designation" />
+                        <input type="hidden" asp-for="GithubUsername" />
+                        <input type="hidden" asp-for="LinkedInUsername" />
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+    }

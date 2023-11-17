@@ -1,0 +1,35 @@
+﻿@model SkillCreateModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Add a skill</h3>
+                </div>
+                <form role="form" asp-antiforgery="true" asp-action="Create"
+                      asp-area="Admin" asp-controller="SkillManagement" method="post">
+                    <div class="card-body">
+                        <partial name="_ResponsePartial" />
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Name"></label>
+                            <input type="text" class="form-control" asp-for="Name" placeholder="Enter Skill Name">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+}

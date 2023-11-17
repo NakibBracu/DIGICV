@@ -1,0 +1,114 @@
+
+.cv-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background: white;
+    text-align: justify;
+}
+
+.section-header {
+    font-size: 18px;
+    /* Adjust the font size as needed */
+    margin-bottom: 4px;
+}
+
+.section-content-1 {
+    margin-bottom: 20px;
+    display: flex;
+    /* Display the contact info and image in a row */
+    align-items: center;
+    /* Center-align content vertically */
+}
+
+.contact-info {
+    flex: 1;
+    /* Allow the contact info to grow and fill the available space */
+    text-align: left;
+    font-size: smaller;
+    line-height: 1.4;
+    /* Adjust the line height to a reasonable value */
+}
+
+    .contact-info p {
+        margin: 6px 0;
+        /* Adjust the margin to decrease the gap between paragraphs */
+    }
+
+.candidate-image {
+    max-width: 150px; /* Increase this value to enlarge the image */
+    margin-left: 80px; /* Adjust the margin as needed */
+}
+
+.section-content-2 {
+    font-size: 18px;
+    margin-top: 20px;
+    /* Add margin at the top */
+   
+    /* Justify the text */
+    line-height: normal;
+}
+
+    .section-content-2 p {
+        margin: 0;
+        /* Remove margin for the paragraph */
+        padding-bottom: 5px;
+        /* Add padding at the bottom */
+    }
+
+    .section-content-2 hr {
+        margin: 5px 0;
+        /* Adjust margin around the hr */
+        /* border-color: darkblue;
+                    border-width: 5px; */
+    }
+
+    .section-content-2 div {
+        font-size: smaller;
+    }
+
+.section-content-3 div {
+    font-size: medium;
+   
+    /* Justify the text */
+    line-height: normal;
+}
+
+@@media print {
+    .print-column {
+        display: inline-block;
+        width: 48%;
+        /* Adjust the width as needed */
+        vertical-align: top;
+    }
+
+    .section-content-1,
+    .section-content-2,
+    .section-content-3,
+    .section-content-5,
+    .section-content-6,
+    .section-content-7,
+    .section-content-8,
+    .card-body {
+        page-break-inside: avoid;
+    }
+
+    .cv-container {
+        page-break-after: auto;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .candidate-image {
+        max-width: 130px; /* Increase this value to enlarge the image */
+        margin-left: 20px; /* Adjust the margin as needed */
+    }
+}
+@media only screen and (max-width: 400px) {
+    .candidate-image {
+        max-width: 100px; /* Increase this value to enlarge the image */
+        margin-left: 10px; /* Adjust the margin as needed */
+    }
+}
+

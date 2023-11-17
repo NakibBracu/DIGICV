@@ -1,0 +1,145 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@model ContactListModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+@section Styles
+    {
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/adminLte3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/adminLte3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/adminLte3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+}
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Contact Messages Table</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <partial name="_ResponsePartial" />
+                        <table id="contactTable" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Subject</th>
+                                    <th>Message</th>
+                                    <th style="width:150px">Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Subject</th>
+                                    <th>Message</th>
+                                    <th style="width:150px">Actions</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <partial name="_ModalPartial" />
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+@section Scripts {
+    <!-- DataTables & Plugins -->
+    <script src="~/adminLte3/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/adminLte3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/adminLte3/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/adminLte3/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/adminLte3/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/adminLte3/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/adminLte3/plugins/jszip/jszip.min.js"></script>
+    <script src="~/adminLte3/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/adminLte3/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/adminLte3/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/adminLte3/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/adminLte3/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <!-- Page specific script -->
+    <script>
+        $(function () {
+            $('#contactTable').DataTable({
+                "autoWidth": false,
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "http://localhost:9000/api/v1/Contactmessage/",
+                },
+                "headers": {
+                    "Authorization": 'Bearer @HttpContextAccessor.HttpContext.Session.GetString("token")'
+                },
+                "type": "GET",
+                "responsive": true,
+                "columnDefs": [
+                    {
+                        "orderable": false,
+                        "targets": 4,
+                        "render": function (data, type, row) {
+                            return '<button type="button" class="btn btn-danger btn-sm show-bs-modal" data-id="' + data + '"><i class="fas fa-trash"></i>Delete</button>';
+                        }
+                    }
+                ]
+            });
+
+            $('#contactTable').on('click', '.show-bs-modal', function (event) {
+                var id = $(this).data("id");
+                var modal = $("#modal-default");
+                modal.find('.modal-body p').text('Are you sure you want to delete this record?');
+
+                // Set the action URL for the form with the actual ID
+                var deleteUrl = "http://localhost:9000/api/v1/Contactmessage/ " + id;
+                $("#deleteForm").attr("action", deleteUrl);
+
+                modal.modal('show');
+            });
+
+            $("#deleteButton").click(function () {
+                // Submit the form to trigger the DELETE request
+                $.ajax({
+                    url: $("#deleteForm").attr("action"),
+                    type: "DELETE", // Use DELETE method
+                    headers: {
+                        "Authorization": 'Bearer @HttpContextAccessor.HttpContext.Session.GetString("token")'
+                    },
+                    contentType: "application/json", // Specify the content type
+                    success: function () {
+                        // Handle success
+                        // You can reload the DataTable or update the UI as needed
+
+                        // Close the modal
+                        $("#modal-default").modal('hide');
+
+                        // Reload the DataTable
+                        $('#contactTable').DataTable().ajax.reload();
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        // Handle errors
+                    }
+                });
+            });
+        });
+    </script>
+}

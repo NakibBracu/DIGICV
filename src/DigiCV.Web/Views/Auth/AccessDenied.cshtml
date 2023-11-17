@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Access Denied</title>
+        <!-- Theme style -->
+        <link rel="stylesheet" href="~/adminLte3/css/adminlte.min.css">
+        <style>
+            html, body {
+                height: 100%
+            }
+        </style>
+    </head>
+    <body>
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="text-center">
+                <h1 class="display-1">403</h1>
+                <h3>Oops! Access Denied.</h3>
+                <p>Sorry but the page you are looking for is not accessible for you.</p>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-info" role="button">Go To Homepage</a>
+            </div>
+        </div>
+    </body>
+</html>

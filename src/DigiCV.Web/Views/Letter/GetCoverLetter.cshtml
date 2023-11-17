@@ -1,0 +1,119 @@
+﻿@model DigiCV.Web.Models.Letter.LetterViewModel
+@{
+    ViewData["Title"] = "GetCoverLetter";
+}
+
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/CoverLetter.css">
+    <style>
+        .pulse-loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .pulse {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: 0 5px;
+            animation: rotate-pulse 3s linear infinite, pulse 3s infinite ease-in-out;
+        }
+
+            .pulse:nth-child(1) {
+                background-color: #3498db; /* Change to your first preferred color */
+            }
+
+            .pulse:nth-child(2) {
+                background-color: #e74c3c; /* Change to your second preferred color */
+            }
+
+            .pulse:nth-child(3) {
+                background-color: #27ae60; /* Change to your third preferred color */
+            }
+
+        @@keyframes rotate-pulse {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @@keyframes pulse {
+            0%, 100% {
+                transform: scale(0.5);
+            }
+
+            50% {
+                transform: scale(1);
+            }
+        }
+    </style>
+}
+<div class="pulse-loader">
+    <div class="pulse"></div>
+    <div class="pulse"></div>
+    <div class="pulse"></div>
+</div>
+
+<section class="container">
+    <div class="my-4 py-4">
+        <div class="mb-3 pb-3 text-center border-bottom">
+            <a asp-controller="Letter" asp-action="Create" class="btn btn-outline-success mr-3">
+                Create New
+            </a>
+            <a asp-controller="Letter" asp-action="GetPdf" asp-route-id="@Model.Property.Id" class="btn btn-success">
+                Download
+            </a>
+        </div>
+        <div class="paper border">
+            <div class="content">
+                <p>
+                    @Model.Property.SenderAddress<br>
+                    @Model.Property.SenderAddressEx<br>
+                    @Model.Property.SenderPhone<br>
+                    @Model.Property.SenderEmail
+                </p><br>
+                <p style="font-weight: bold; line-height:0">@Model.Property.SendingDate.ToString("dd MMMM yyyy")</p>
+                <p>
+                    @Model.Property.Recipient<br>
+                    @Model.Property.CompanyName<br>
+                    @Model.Property.CompanyAddress
+                </p>
+                <p style="font-weight: bold;">Subject: @Model.Property.Subject</p><br>
+                <div style="line-height:0">@Model.Property.RecipientAddressing</div>
+                <div style="text-align: justify; white-space: pre-line;">
+                    @Model.Property.Body
+                </div>
+                <p><br>Sincerely,</p>
+                <p style="font-weight: bold;">@Model.Property.SenderName</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script>
+        // Function to hide the loader and display the content
+        function hideLoaderAndShowContent() {
+            // Hide the pre-loader
+            var preloader = document.querySelector('.pulse-loader');
+            preloader.style.display = 'none';
+
+            // Display the content
+            var content = document.querySelector('.content');
+            content.style.display = 'block';
+        }
+
+        // Use the window.onload event to trigger the function when the page finishes loading
+        window.onload = function () {
+            // Simulate a 3-second loading delay (you can replace this with your actual loading logic)
+            setTimeout(hideLoaderAndShowContent, 2000); // 2000 milliseconds = 3 seconds
+        };
+    </script>
+}

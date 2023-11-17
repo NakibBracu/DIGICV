@@ -1,0 +1,70 @@
+/*hr*/
+.custom-hr {
+    width: 90%;
+    height: 2px;
+    background-color: gray;
+    margin: 10px auto;
+}
+
+
+
+/*card*/
+.card {
+    position: relative;
+    overflow: hidden;
+    border: none;
+    box-shadow: none;
+    background-color: #e9ecef;
+}
+    .card img {
+        transition: transform 0.3s, filter 0.3s;
+    }
+
+    .card:hover img {
+        transform: scale(0.9);
+        filter: brightness(50%);
+        background-color: transparent;
+        border: none;
+        background-color: #e9ecef;
+    }
+    /*.overlay {
+    position: absolute;
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.card:hover .overlay {
+    opacity: 0.6;
+}*/
+
+
+
+/*center text*/
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.card:hover .centered {
+    opacity: 1;
+}
+
+/*center button*/
+.btn-custom {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+    .btn-custom:hover {
+        background-color: white;
+        color: black;
+    }

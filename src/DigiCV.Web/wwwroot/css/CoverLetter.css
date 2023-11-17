@@ -1,0 +1,71 @@
+﻿.paper {
+    margin-left: auto;
+    margin-right: auto;
+    width: 8.27in;
+    height: 11.69in;
+    background-color: white;
+}
+
+.content {
+    padding: 1in;
+    font-size: 12pt;
+    line-height: 16pt;
+    font-weight: 500;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+    .paper {
+        width: 4.14in;
+        height: 5.85in;
+    }
+
+    .content {
+        padding: 0.5in;
+        font-size: 6pt;
+        line-height: 7.5pt;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .paper {
+        width: 5in;
+        height: 7in;
+    }
+
+    .content {
+        padding: 0.6in;
+        font-size: 7.2pt;
+        line-height: 9.6pt;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 800px) {
+    .paper {
+        width: 7.5in;
+        height: 10.5in;
+    }
+
+    .content {
+        padding: 0.9in;
+        font-size: 10.8pt;
+        line-height: 14.4pt;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    .paper {
+        width: 8.27in;
+        height: 11.69in;
+    }
+
+    .content {
+        padding: 1in;
+        font-size: 12pt;
+        line-height: 16pt;
+    }
+}

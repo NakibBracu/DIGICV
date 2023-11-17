@@ -1,0 +1,470 @@
+﻿@model ResumeViewModel
+@{
+    ViewData["Title"] = "Standard";
+}
+
+
+
+@section Styles
+    {
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+        .pulse-loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .pulse {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: 0 5px;
+            animation: rotate-pulse 3s linear infinite, pulse 3s infinite ease-in-out;
+        }
+
+            .pulse:nth-child(1) {
+                background-color: #3498db; /* Change to your first preferred color */
+            }
+
+            .pulse:nth-child(2) {
+                background-color: #e74c3c; /* Change to your second preferred color */
+            }
+
+            .pulse:nth-child(3) {
+                background-color: #27ae60; /* Change to your third preferred color */
+            }
+
+        @@keyframes rotate-pulse {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @@keyframes pulse {
+            0%, 100% {
+                transform: scale(0.5);
+            }
+
+            50% {
+                transform: scale(1);
+            }
+        }
+        /* template 1 css added */
+        .cv-container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background: white;
+            text-align: justify;
+        }
+
+        .section-header {
+            font-size: 18px;
+            /* Adjust the font size as needed */
+            margin-bottom: 4px;
+        }
+
+        .section-content-1 {
+            margin-bottom: 20px;
+            display: flex;
+            /* Display the contact info and image in a row */
+            align-items: center;
+            /* Center-align content vertically */
+        }
+
+        .contact-info {
+            flex: 1;
+            /* Allow the contact info to grow and fill the available space */
+            text-align: left;
+            font-size: smaller;
+            line-height: 1.4;
+            /* Adjust the line height to a reasonable value */
+        }
+
+            .contact-info p {
+                margin: 6px 0;
+                /* Adjust the margin to decrease the gap between paragraphs */
+            }
+
+        .candidate-image {
+            width: 150px; /* Increase this value to enlarge the image */
+            margin-left: 230px; /* Adjust the margin as needed */
+        }
+
+        .section-content-2 {
+            font-size: 18px;
+            margin-top: 20px;
+            /* Add margin at the top */
+            /* Justify the text */
+            line-height: normal;
+        }
+
+            .section-content-2 p {
+                margin: 0;
+                /* Remove margin for the paragraph */
+                padding-bottom: 5px;
+                /* Add padding at the bottom */
+            }
+
+            .section-content-2 hr {
+                margin: 5px 0;
+                /* Adjust margin around the hr */
+                /* border-color: darkblue;
+                                    border-width: 5px; */
+            }
+
+            .section-content-2 div {
+                font-size: smaller;
+            }
+
+        .section-content-3 div {
+            font-size: medium;
+            /* Justify the text */
+            line-height: normal;
+        }
+
+        @@media print {
+            .print-column {
+                display: inline-block;
+                width: 48%;
+                /* Adjust the width as needed */
+                vertical-align: top;
+            }
+
+            .section-content-1,
+            .section-content-2,
+            .section-content-3,
+            .section-content-5,
+            .section-content-6,
+            .section-content-7,
+            .section-content-8,
+            .card-body {
+                page-break-inside: avoid;
+            }
+
+            .cv-container {
+                page-break-after: auto;
+            }
+        }
+
+        @@media only screen and (max-width: 600px) {
+            .candidate-image {
+                max-width: 130px; /* Increase this value to enlarge the image */
+                margin-left: 20px; /* Adjust the margin as needed */
+            }
+        }
+
+        @@media only screen and (max-width: 400px) {
+            .candidate-image {
+                max-width: 100px; /* Increase this value to enlarge the image */
+                margin-left: 10px; /* Adjust the margin as needed */
+            }
+        }
+
+    </style>
+}
+
+
+<div class="pulse-loader">
+    <div class="pulse"></div>
+    <div class="pulse"></div>
+    <div class="pulse"></div>
+</div>
+
+<div class="content">
+
+    <div class="my-4 py-4">
+        <div class="cv-container">
+            <div class="section">
+                <table class="section-content-1">
+                    <tr>
+
+                        <!-- First Column (Data) -->
+                        <td>
+                            <div class="contact-info">
+                                <h2 class="section-header">@Model.ResumeProperty.FullName</h2>
+                                <p><strong>Email:</strong> @Model.ResumeProperty.Email</p>
+                                <p><strong>Contact:</strong> @Model.ResumeProperty.PhoneNumber</p>
+                                <p><strong>Skype:</strong> @Model.ResumeProperty.Skype</p>
+                                <p>
+                                    <strong>LinkedIn:</strong> <a href="@Model.ResumeProperty.LinkedIn">@Model.ResumeProperty.LinkedIn</a>
+                                </p>
+                                <p><strong>Residential Address:</strong> @Model.ResumeProperty.Address</p>
+                            </div>
+                        </td>
+
+
+                        <!-- Second Column (Image) -->
+                        <td class="col-md-4">
+                            <img src="~/ResumeImage/@Model.ResumeProperty.ImageName" alt="Candidate Image" class="candidate-image">
+                        </td>
+                    </tr>
+                </table>
+
+
+
+                @if (!string.IsNullOrEmpty(Model.ResumeProperty.Summary))
+                {
+                    <!-- New section for Professional Summary -->
+                    <div class="section-content-2">
+                        <p><strong>Professional Summary</strong></p>
+                        <hr class="border border-primary border-2">
+                        <div>
+                            @Model.ResumeProperty.Summary
+                        </div>
+                    </div>
+                }
+
+                @if (Model.ResumeProperty.Skills.Count != 0)
+                {
+                    <!-- New section for Language,FrameWork and other skills -->
+                    <div class="section-content-3 mt-4">
+                        <p style="font-size: 18px;"><strong>Language, Framework, Tools and Other Skills</strong></p>
+                        <hr class="border border-primary border-2">
+                        <div class="row">
+                            <table class="table table-borderless">
+                                <tbody>
+                                    @if (Model.ResumeProperty.Skills.Count <= 5)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <ul class="small">
+                                                    @foreach (var skillList in Model.ResumeProperty.Skills)
+                                                    {
+                                                        <li>@skillList.Skill.Name</li>
+                                                    }
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        var skills = Model.ResumeProperty.Skills;
+                                        var halfCount = (int)Math.Ceiling((double)skills.Count / 2);
+                                        var firstHalf = skills.Take(halfCount);
+                                        var secondHalf = skills.Skip(halfCount);
+
+                                        <tr>
+                                            <td>
+                                                <ul class="small">
+                                                    @foreach (var skillList in firstHalf)
+                                                    {
+                                                        <li>@skillList.Skill.Name</li>
+                                                    }
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <ul class="small">
+                                                    @foreach (var skillList in secondHalf)
+                                                    {
+                                                        <li>@skillList.Skill.Name</li>
+                                                    }
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                }
+
+                @if (Model.ResumeProperty.Experiences.Count != 0)
+                {
+                    <!-- New section for Working Experience  -->
+                    <div class="section-content-4 mt-1">
+                        <p style="font-size: 18px;"><strong>Working Experience</strong></p>
+                        <hr class="border border-primary border-2">
+                        <div class="row">
+                            @foreach (var experience in Model.ResumeProperty.Experiences)
+                            {
+                                <div class="col-md-12 mt-3">
+                                    <h5><strong>@experience.Position</strong></h5>
+                                    <p>
+                                        <span style="float: left;">@experience.Companay - @experience.JoiningDate.ToShortDateString()</span>
+                                        <span style="float: right;">@experience.ResignationDate.ToShortDateString()</span>
+                                        <div style="clear: both;"></div>
+                                    </p>
+                                    <ul class="text-justify">
+                                        @foreach (var responsibility in experience.Responsibilities)
+                                        {
+                                            <li>@responsibility</li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+
+                        </div>
+
+
+                    </div>
+
+                }
+
+                @if (Model.ResumeProperty.Projects.Count != 0)
+                {
+                    <!-- New section for Industrial / Personal Application Projects  -->
+                    <div class="section-content-5 mt-4">
+                        <p style="font-size: 18px;"><strong>Industrial / Personal Application Projects</strong></p>
+                        <hr class="border border-primary border-2">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-borderless">
+
+                                    <tbody>
+                                        <tr>
+                                            <th style="width: 40%;">Company Name / Personal</th>
+                                            <th style="width: 60%;">Application Project Description</th>
+                                        </tr>
+                                        @foreach (var project in Model.ResumeProperty.Projects)
+                                        {
+                                            <tr>
+                                                <td><strong>@project.Author</strong></td>
+                                                <td class="project-description">
+                                                    <strong>@project.Name</strong><br>
+                                                    @Html.DisplayFor(modelItem => project.Description)
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+                @if (Model.ResumeProperty.Trainings.Count != 0)
+                {
+                    <!-- New section for Professional Training  -->
+                    <div class="section-content-6 mt-4">
+                        <p style="font-size: 18px;"><strong>Professional Training</strong></p>
+                        <hr class="border border-primary border-2">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul>
+                                    @foreach (var training in Model.ResumeProperty.Trainings)
+                                    {
+                                        <li>@training</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.ResumeProperty.Educations.Count != 0)
+                {
+                    <!-- New section for Education -->
+                    <div class="section-content-7 mt-4">
+                        <p style="font-size: 18px;"><strong>Education</strong></p>
+                        <hr class="border border-primary border-2">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 70%;"></th>
+                                            <th style="width: 30%;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var education in Model.ResumeProperty.Educations)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @education.Level
+                                                    @if (!string.IsNullOrEmpty(education.Grade))
+                                                    {
+                                                        @($" ({education.Grade})")
+                                                    }
+                                                    <br />
+                                                    @education.University
+                                                </td>
+                                                <td style="text-align: right;">
+                                                    @education.PassingYear.ToString("yyyy")
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.ResumeProperty.References.Count != 0)
+                {
+                    <!-- New section for Reference -->
+                    <div class="section-content-8 mt-4" style="margin-bottom: 20px;">
+                        <p style="font-size: 18px;"><strong>References</strong></p>
+                        <hr class="border border-primary border-2">
+                        <div class="row">
+                            <table class="table table-borderless">
+                                <tbody>
+                                    @{
+                                        var totalReferences = Model.ResumeProperty.References.Count();
+                                        var pairsCount = (int)Math.Ceiling((double)totalReferences / 2);
+                                    }
+
+                                    @for (var pairIndex = 0; pairIndex < pairsCount; pairIndex++)
+                                    {
+                                        <tr>
+                                            @for (var i = pairIndex * 2; i < Math.Min((pairIndex * 2) + 2, totalReferences); i++)
+                                            {
+                                                var reference = Model.ResumeProperty.References.ElementAt(i);
+                                                <td>
+                                                    <strong>Name:</strong> @reference.Name <br>
+                                                    <strong>Designation:</strong> @reference.Designation <br>
+                                                    <strong>Company:</strong> @reference.Compnay <br>
+                                                    <strong>Address:</strong> @reference.Address <br>
+                                                    <strong>Email:</strong> @reference.Email <br>
+                                                    <strong>Contact:</strong> @reference.PhoneNumber
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script>
+        // Function to hide the loader and display the content
+        function hideLoaderAndShowContent() {
+            // Hide the pre-loader
+            var preloader = document.querySelector('.pulse-loader');
+            preloader.style.display = 'none';
+
+            // Display the content
+            var content = document.querySelector('.content');
+            content.style.display = 'block';
+        }
+
+        // Use the window.onload event to trigger the function when the page finishes loading
+        window.onload = function () {
+            // Simulate a 3-second loading delay (you can replace this with your actual loading logic)
+            setTimeout(hideLoaderAndShowContent, 3000); // 3000 milliseconds = 3 seconds
+        };
+    </script>
+}

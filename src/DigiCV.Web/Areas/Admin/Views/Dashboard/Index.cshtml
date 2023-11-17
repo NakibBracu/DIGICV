@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<!-- Preloader -->
+<div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="~/adminLte3/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+</div>
+<style>
+    .equal-height-boxes .small-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        height: 200px; /* Adjust the height as needed */
+    }
+
+</style>
+
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row equal-height-boxes">
+            <!-- Box 3: Total Users -->
+            <div class="col-sm-2">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>@ViewBag.TotalUsers</h3>
+                        <p>Total Users</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Box 1: Total Resume Created -->
+            <div class="col-sm-2">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>@ViewBag.TotalResumeCount</h3>
+                        <p>Total Resume Created</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Box 2: Total Cover Letter Created -->
+            <div class="col-sm-2">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>@ViewBag.TotalCoverLetterTemplates</h3>
+                        <p>Total Cover Letter Created</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Box 4: Total Resume Templates -->
+            <div class="col-sm-2">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>@ViewBag.TotalResumeTemplates</h3>
+                        <p>Total Resume Template</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+        <!-- Main row -->
+        <!-- /.row (main row) -->
+    </div><!-- /.container-fluid -->
+</section>
+
+

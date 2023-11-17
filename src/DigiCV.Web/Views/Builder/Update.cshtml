@@ -1,0 +1,812 @@
+﻿@model DigiCV.Web.Models.Builder.BuilderUpdateModel;
+@section Styles
+    {
+    <!-- BS Stepper -->
+    <link rel="stylesheet" href="~/adminLte3/plugins/bs-stepper/css/bs-stepper.min.css">
+    <link rel="stylesheet" href="~/adminLte3/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/adminLte3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/croppieFiles/croppie.css" /> <!-- Update the path -->
+    <link rel="stylesheet" href="~/css/captcha.css">
+
+    <style>
+        .croppie-container {
+            width: 100%;
+            height: 80%;
+        }
+
+        .image-input-container {
+            position: relative;
+            background-color: #f0ffff;
+            /* Background color of the container */
+            border: 2px solid #ccc;
+            /* Border style */
+            border-radius: 10px;
+            /* Rounded corners */
+            overflow: hidden;
+            /* Hide overflow content */
+            cursor: pointer;
+            /* Change cursor on hover */
+        }
+            /* Style for the background image */
+            .image-input-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                /* Scale the image to cover the container */
+            }
+
+        input:invalid {
+            border: 2px dashed red;
+        }
+    </style>
+}
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-sm-12 text-center">
+                <h1 class="m-0">Builder Page</h1>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <partial name="_ResponsePartial" />
+    <div class="container flex-grow-1 flex-shrink-0 py-2">
+        <div class="mb-2 p-4 bg-white shadow-sm">
+            @* <h3>Multi-stepper</h3> *@
+
+            <div id="stepper1" class="bs-stepper">
+                <div class="bs-stepper-header" role="tablist">
+
+                    @* User Info Tab Start *@
+                    <div class="step" data-target="#user-info">
+                        <button type="button" class="step-trigger" role="tab">
+                            <span class="bs-stepper-circle"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
+                            @* <span class="bs-stepper-label">Info</span> *@
+                        </button>
+                    </div>
+                    @* User Info Tab End *@
+
+                    @* Experience Tab Start *@
+                    <div class="bs-stepper-line"></div>
+                    <div class="step" data-target="#experience-list">
+                        <button type="button" class="step-trigger" role="tab">
+                            <span class="bs-stepper-circle"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
+                            @* <span class="bs-stepper-label">Experience</span> *@
+                        </button>
+                    </div>
+                    @* Experience Tab End *@
+
+                    @* Projects & Training Tab Start *@
+                    <div class="bs-stepper-line"></div>
+                    <div class="step" data-target="#project-list">
+                        <button type="button" class="step-trigger" role="tab">
+                            <span class="bs-stepper-circle"><i class="fa fa-industry" aria-hidden="true"></i></span>
+                            @* <span class="bs-stepper-label">Projects</span> *@
+                        </button>
+                    </div>
+                    @* Projects & Training Tab End *@
+
+                    @* Education & Reference Tab Start *@
+                    <div class="bs-stepper-line"></div>
+                    <div class="step" data-target="#education-list">
+                        <button type="button" class="step-trigger" role="tab">
+                            <span class="bs-stepper-circle"><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
+                            @* <span class="bs-stepper-label">Education</span> *@
+                        </button>
+                    </div>
+                    @* Education & Reference Tab End *@
+
+                    @* Generate Tab Start *@
+                    <div class="bs-stepper-line"></div>
+                    <div class="step" data-target="#generate">
+                        <button type="button" class="step-trigger" role="tab">
+                            <span class="bs-stepper-circle"><i class="fa fa-paper-plane" aria-hidden="true"></i></span>
+                            @* <span class="bs-stepper-label">Generate</span> *@
+                        </button>
+                    </div>
+                    @* Generate Tab End *@
+                </div>
+                <div class="bs-stepper-content">
+                    <form id="form" class="form" asp-controller="Builder" asp-action="UpdateResume" method="post" enctype="multipart/form-data">
+                        @* User Info Page Start *@
+                        <div id="user-info" role="tabpanel" class="bs-stepper-pane">
+
+                            <div class="card card card-outline card-primary">
+                                <div class="card-header">
+                                    <h4 class="card-title text-bold">Personal Information</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-7 col-md-9 col-lg-10 order-md-1 order-sm-1 order-2">
+                                            <div class="form-group form-row">
+                                                <input asp-for="ResumeId" type="hidden" />
+                                                <input asp-for="TemplateId" type="hidden" />
+                                                <div class="col-12 col-sm-6">
+                                                    <input asp-for="FullName" class="form-control" type="text" placeholder="Full Name" />
+                                                    <span asp-validation-for="FullName" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                                                    <input asp-for="Email" class="form-control" type="email" placeholder="Email Address" />
+                                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group form-row">
+                                                <div class="col-12 col-sm-6">
+                                                    <input asp-for="LinkdIn" class="form-control" type="text" placeholder="LinkedIn" />
+                                                    <span asp-validation-for="LinkdIn" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                                                    <input asp-for="Skype" class="form-control" type="text" placeholder="Skype username" />
+                                                    <span asp-validation-for="Skype" class="text-danger"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group form-row">
+                                                <div class="col-12 col-sm-6">
+                                                    <input asp-for="PhoneNumber" class="form-control" type="number" placeholder="Contact Number" />
+                                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                                                    <input asp-for="Address" class="form-control" type="text" placeholder="Residential Address" />
+                                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-5 col-md-3 col-lg-2 order-md-2 order-sm-2 order-1 text-center">
+                                            <div class="image-input-container form-group form-row" title="Click to Change">
+                                                <input type="hidden" asp-for="ImageName" />
+                                                @if (Model.ImageName != null)
+                                                {
+                                                    <img id="profile-image-show" name="profile-image" src="~/ResumeImage/@Model.ImageName" alt="Select Image">
+                                                }
+                                                else
+                                                {
+                                                    <img id="profile-image-show" name="profile-image" src="~/images/select-image.png" alt="Select Image">
+                                                }
+                                                <input type="file" id="profile-image-input" class="form-control" asp-for="Image" value="" accept="image/*" hidden>
+                                            </div>
+                                            <span asp-validation-for="Image" id="profile-image-validation" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <select asp-items="@Model.SkillItems" asp-for="SkillsId" style="width: 100%" class="form-control skillSelector select2-multiple select2-blue" multiple="multiple" data-placeholder="Select a Skill">
+                                        </select>
+                                        <span asp-validation-for="SkillsId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea asp-for="Summary" class="form-control" rows="3" placeholder="Professional Summary"></textarea>
+                                        <span asp-validation-for="Summary" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="btn btn-primary" onclick="stepper.next()">Next</a>
+                        </div>
+                        @* User Info Page End *@
+
+                        @* Experience Page Start *@
+                        <div id="experience-list" role="tabpanel" class="bs-stepper-pane">
+
+                                <div id="experience">
+                                @{
+                                    var experienceCount = Model.ExperienceUpdateModels == null ? 1 : Model.ExperienceUpdateModels.Count;
+                                }
+                                @for (var experienceIndex = 0; experienceIndex < experienceCount; experienceIndex++)
+                                {
+                                    <div class="card card card-outline card-primary">
+                                        <div class="card-header">
+                                            <h4 class="card-title text-bold">Experience @(experienceIndex+1)</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <input asp-for="ExperienceUpdateModels[experienceIndex].Id" type="hidden"/>
+                                                <input asp-for="ExperienceUpdateModels[experienceIndex].Companay" class="form-control" type="text" placeholder="Company Info" />
+                                                <span asp-validation-for="ExperienceUpdateModels[experienceIndex].Companay" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group form-row">
+                                                <div class="col-12 col-sm-4">
+                                                    <input asp-for="ExperienceUpdateModels[experienceIndex].Position" class="form-control" type="text" placeholder="Your Position" />
+                                                    <span asp-validation-for="ExperienceUpdateModels[experienceIndex].Position" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-12 col-sm-4 mt-4 mt-sm-0">
+                                                    <input asp-for="ExperienceUpdateModels[experienceIndex].JoiningDate" class="form-control" type="date" placeholder="Joining date" />
+                                                    <span asp-validation-for="ExperienceUpdateModels[experienceIndex].JoiningDate" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-12 col-sm-4 mt-4 mt-sm-0">
+                                                    <input asp-for="ExperienceUpdateModels[experienceIndex].ResignationDate" class="form-control" type="date" placeholder="Resignation date" />
+                                                    <span asp-validation-for="ExperienceUpdateModels[experienceIndex].ResignationDate" class="text-danger"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="card card-outline card-success">
+                                                <div class="card-header">
+                                                    <h5 class="card-title text-black-50">Responsibilities</h5>
+                                                    <div class="card-tools">
+                                                        <button type="button" class="btn btn-sm btn-primary add-responsibility"><i class="fas fa-plus"></i></button>
+                                                        <button type="button" class="btn btn-sm btn-danger remove-responsibility"><i class="fas fa-minus"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    @{
+                                                        int responsibilityCount = Model.ExperienceUpdateModels?[experienceIndex]?.Responsibilities?.Count ?? 1;
+                                                    }
+
+                                                    @for (var responsibilityIndex = 0; responsibilityIndex < responsibilityCount; responsibilityIndex++)
+                                                    {
+                                                        <div class="form-group">
+                                                            <input asp-for="ExperienceUpdateModels[experienceIndex].Responsibilities[responsibilityIndex]" class="form-control" type="text" placeholder="Responsibility" minlength="4" maxlength="100" required />
+                                                            <span asp-validation-for="ExperienceUpdateModels[experienceIndex].Responsibilities[responsibilityIndex]" class="text-danger"></span>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <input type="hidden" class="resLastIndex" value="0" />
+                                            </div>
+                                            <input type="hidden" class="exLastIndex" value="0" />
+                                        </div>
+                                    </div>
+                                }
+                                </div>
+
+
+                            <a id="add-experience" class="btn btn-outline-primary float-right">Add Experience</a> 
+                            <a id="remove-experience" class="btn btn-outline-danger float-right mr-1">Remove Experience</a>
+                            <a class="btn btn-primary" onclick="stepper.previous()">Previous</a>
+                            <a class="btn btn-primary" onclick="stepper.next()">Next</a>
+
+                        </div>
+                        @* Experience Page End *@
+
+                        @* Projects & Training Page Start *@
+                        <div id="project-list" role="tabpanel" class="bs-stepper-pane">
+                            <div class="card card-outline card-primary">
+                                <div class="card-header">
+                                    <h4 class="card-title text-bold">Industrial / Personal Application Projects</h4>
+                                    <div class="card-tools">
+                                        <button id="add-project" type="button" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></button>
+                                        <button id="remove-project" type="button" class="btn btn-sm btn-danger"><i class="fas fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <div id="project" class="card-body">
+                                    @{
+                                       var projectCount = Model.ProjectUpdateModels == null ? 1 : Model.ProjectUpdateModels.Count;
+                                    }
+
+                                    @for (var projectIndex = 0; projectIndex < projectCount; projectIndex++)
+                                    {
+                                    <div class="card card-outline card-success">
+                                        <div class="card-body">
+                                            <div class="form-group form-row">
+                                                <div class="col-12 col-sm-6">
+                                                    <input asp-for="ProjectUpdateModels[projectIndex].Id" type="hidden" />
+                                                    <input asp-for="ProjectUpdateModels[projectIndex].Author" class="form-control" type="text" placeholder="Company Name / Personal" />
+                                                        <span asp-validation-for="ProjectUpdateModels[projectIndex].Author" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                                                        <input asp-for="ProjectUpdateModels[projectIndex].Name" class="form-control" type="text" placeholder="Application Project" />
+                                                        <span asp-validation-for="ProjectUpdateModels[projectIndex].Name" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                    <textarea asp-for="ProjectUpdateModels[projectIndex].Description" class="form-control" rows="3" placeholder="Description"></textarea>
+                                                    <span asp-validation-for="ProjectUpdateModels[projectIndex].Description" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="card card-outline card-primary">
+                                <div class="card-header">
+                                    <h4 class="card-title text-bold">Professional Training</h4>
+                                    <div class="card-tools">
+                                        <button id="add-training" type="button" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></button>
+                                        <button id="remove-training" type="button" class="btn btn-sm btn-danger"><i class="fas fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <div id="training" class="card-body">
+                                    @{
+                                        var trainingCount = Model.Trainings == null ? 1 : Model.Trainings.Count;
+                                    }
+
+                                    @for (var trainingIndex = 0; trainingIndex < trainingCount; trainingIndex++)
+                                    {
+                                        <div class="form-group">
+                                            <input asp-for="Trainings[trainingIndex]" class="form-control" type="text" placeholder="Training" minlength="4" maxlength="100" required />
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <a class="btn btn-primary" onclick="stepper.previous()">Previous</a>
+                            <a class="btn btn-primary" onclick="stepper.next()">Next</a>
+                        </div>
+                        @* Projects & Training Page End *@
+
+                        @* Educations Page Start *@
+                        <div id="education-list" role="tabpanel" class="bs-stepper-pane">
+
+                            <div class="card card-outline card-primary">
+                                <div class="card-header">
+                                    <h4 class="card-title text-bold">Educational qualifications</h4>
+                                    <div class="card-tools">
+                                        <button id="add-education" type="button" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></button>
+                                        <button id="remove-education" type="button" class="btn btn-sm btn-danger"><i class="fas fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <div id="qualifications" class="card-body">
+                                    @{
+                                        var educationCount = Model.EducationUpdateModels == null ? 1 : Model.EducationUpdateModels.Count;
+                                    }
+
+                                    @for (var educationIndex = 0; educationIndex < educationCount; educationIndex++)
+                                    {
+                                        <div class="card card-outline card-success">
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <input asp-for="EducationUpdateModels[educationIndex].Id" type="hidden"/>
+                                                    <input asp-for="EducationUpdateModels[educationIndex].University" class="form-control" type="text" placeholder="University / Institute" />
+                                                    <span asp-validation-for="EducationUpdateModels[educationIndex].University" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group form-row">
+                                                    <div class="col-12 col-sm-4">
+                                                        <input asp-for="EducationUpdateModels[educationIndex].Level" class="form-control" type="text" placeholder="Level / Degree" />
+                                                        <span asp-validation-for="EducationUpdateModels[educationIndex].Level" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4 mt-4 mt-sm-0">
+                                                        <input asp-for="EducationUpdateModels[educationIndex].Grade" class="form-control" type="text" placeholder="Grade" />
+                                                        <span asp-validation-for="EducationUpdateModels[educationIndex].Grade" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4 mt-4 mt-sm-0">
+                                                        <input asp-for="EducationUpdateModels[educationIndex].PassingYear" class="form-control" type="date" />
+                                                        <span asp-validation-for="EducationUpdateModels[educationIndex].PassingYear" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    
+                                </div>
+                            </div>
+
+                            <div class="card card-outline card-primary">
+                                <div class="card-header">
+                                    <h4 class="card-title text-bold">References</h4>
+                                    <div class="card-tools">
+                                        <button id="add-reference" type="button" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></button>
+                                        <button id="remove-reference" type="button" class="btn btn-sm btn-danger"><i class="fas fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <div id="reference" class="card-body">
+                                    @{
+                                        var referenceCount = Model.ReferenceUpdateModels == null ? 1 : Model.ReferenceUpdateModels.Count;
+                                    }
+
+                                    @for (var referenceIndex = 0; referenceIndex < referenceCount; referenceIndex++)
+                                    {
+                                        <div class="card card-outline card-success">
+                                            <div class="card-body">
+                                                <div class="form-group form-row">
+                                                    <div class="col-12 col-sm-4">
+                                                        <input asp-for="ReferenceUpdateModels[referenceIndex].Id" type="hidden" />
+                                                        <input asp-for="ReferenceUpdateModels[referenceIndex].Name" class="form-control" type="text" placeholder="Name" />
+                                                        <span asp-validation-for="ReferenceUpdateModels[referenceIndex].Name" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4 mt-4 mt-sm-0">
+                                                        <input asp-for="ReferenceUpdateModels[referenceIndex].Designation" class="form-control" type="text" placeholder="Designation" />
+                                                        <span asp-validation-for="ReferenceUpdateModels[referenceIndex].Designation" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4 mt-4 mt-sm-0">
+                                                        <input asp-for="ReferenceUpdateModels[referenceIndex].Compnay" class="form-control" type="text" placeholder="Company" />
+                                                        <span asp-validation-for="ReferenceUpdateModels[referenceIndex].Compnay" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group form-row">
+                                                    <div class="col-12 col-sm-6">
+                                                        <input asp-for="ReferenceUpdateModels[referenceIndex].PhoneNumber" class="form-control" type="number" placeholder="Contact Number" />
+                                                        <span asp-validation-for="ReferenceUpdateModels[referenceIndex].PhoneNumber" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                                                        <input asp-for="ReferenceUpdateModels[referenceIndex].Email" class="form-control" type="email" placeholder="Email" />
+                                                        <span asp-validation-for="ReferenceUpdateModels[referenceIndex].Email" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input asp-for="ReferenceUpdateModels[referenceIndex].Address" class="form-control" type="text" placeholder="Address" />
+                                                    <span asp-validation-for="ReferenceUpdateModels[referenceIndex].Address" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    
+                                </div>
+                            </div>
+
+                            <a class="btn btn-primary" onclick="stepper.previous()">Previous</a>
+                            <a class="btn btn-primary" onclick="stepper.next()">Next</a>
+                        </div>
+                        @* Educations Page End *@
+
+                        @* Generate Page Start *@
+                        <div id="generate" role="tabpanel" class="bs-stepper-pane text-center">
+                            <div class="card card-outline card-success">
+                                <div class="card-body">
+                                    <h4 class="text-bold">Submit And Go next Page to Change Template</h4>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="form-group form-row">
+                                        <div class="col-12 text-left">
+                                            <label>Resume Name:</label>
+                                            <input asp-for="Title" class="form-control" type="text" placeholder="Resume Name" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="g-recaptcha" data-sitekey="6LfpJoUoAAAAALNRRldTc4u8IBugFfUxVVRpHY8s"></div>
+                            <a class="btn btn-primary mt-5" onclick="stepper.previous()">Previous</a>
+                            <button type="submit" class="btn btn-primary mt-5">Submit</button>
+                        </div>
+                    </form>
+                    <div style="text-align: center;">
+                        <p id="captcha_msg"></p>
+                    </div>
+                    <partial name="_ImageResizerPartial" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <!-- BS-Stepper -->
+    <script src="~/adminLte3/plugins/bs-stepper/js/bs-stepper.min.js"></script>
+    <script src="~/adminLte3/plugins/select2/js/select2.full.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="~/js/captcha.js"></script>
+    <script>
+        // BS-Stepper Init
+        document.addEventListener('DOMContentLoaded', function () {
+            window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+        })
+
+        $(document).ready(function () {
+
+            $('.skillSelector').select2({
+                allowClear: true,
+                theme: 'bootstrap4'
+            });
+
+            //Work Experience Script Start
+
+            //--Add new experience Start--//
+            let experienceCount = 1;
+            let experienceIndex = 0;
+
+
+            $('#add-experience').click(function () {
+                experienceCount = $('#experience>.card').length;
+                experienceIndex = experienceCount;
+
+                // Create a new input element for experience
+                let experienceHtml = `
+                                    <div class="card card-outline card-primary">
+                                        <div class="card-header">
+                                            <h4 class="card-title text-bold" >Experience ${experienceCount + 1}</h4>
+                                        </div>
+                                        <div class="card-body">
+                                        <div class="form-group">
+                                                <input name="ExperienceUpdateModels[${experienceIndex}].Id" type="hidden" />
+                                                    <input name="ExperienceUpdateModels[${experienceIndex}].Companay" class="form-control" type="text" placeholder="Company Info"/>
+                                        </div>
+                                        <div class="form-group form-row">
+                                            <div class="col-12 col-sm-4">
+                                            <input name="ExperienceUpdateModels[${experienceIndex}].Position" class="form-control" type="text" placeholder="Your Position"/>
+                                            </div>
+                                            <div class="col-12 col-sm-4 mt-4 mt-sm-0">
+                                            <input name="ExperienceUpdateModels[${experienceIndex}].JoiningDate" class="form-control" type="date" placeholder="Joining date"/>
+                                            </div>
+                                            <div class="col-12 col-sm-4 mt-4 mt-sm-0">
+                                            <input name="ExperienceUpdateModels[${experienceIndex}].ResignationDate" class="form-control" type="date" placeholder="Resignation date"/>
+                                            </div>
+                                        </div>
+                                        <div class="card card card-outline card-success">
+                                            <div class="card-header">
+                                            <h5 class="card-title">Responsibility</h5>
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-sm btn-success add-responsibility"><i class="fas fa-plus"></i></button>
+                                                <button type="button" class="btn btn-sm btn-danger remove-responsibility"><i class="fas fa-minus"></i></button>
+                                            </div>
+                                            </div>
+                                            <div class="card-body">
+                                            <div class="form-group">
+                                                <input name="ExperienceUpdateModels[${experienceIndex}].Responsibilities[${0}]" class="form-control" type="text" placeholder="Responsibility"/>
+                                            </div>
+
+                                            </div>
+                                            <input type="hidden" class="resLastIndex" value="0"/>
+                                        </div>
+                                            <input type="hidden" class="exLastIndex"  value="${experienceIndex}"/>
+                                        </div>
+                                    </div>`;
+
+                //append the new input element
+                $('#experience').append(experienceHtml);
+            });
+            //--Add new experience End--//
+            //--Remove last experience Start--//
+            $('#remove-experience').click(function () {
+                var experience = document.getElementById('experience');
+                var lastCard = experience.lastElementChild; 
+                if (lastCard && $('#experience > .card').length > 1) {
+                    experience.removeChild(lastCard);
+                }
+            });
+
+            //--Remove last experience End --//
+
+            //--Add new responsibility Start--//
+            $(document).on("click", ".add-responsibility", function () {
+
+                var card = $(this).closest('.card');
+                var responsibilityIndex = card.find('.card-body .form-group').length;
+                let nexIndex = $(this).closest('.card-primary').find('.exLastIndex').val();
+
+                // Create a new input element for responsibility
+                let newResponsibilityInput = `<div class="form-group">
+                                                   <input name="ExperienceUpdateModels[${nexIndex}].Responsibilities[${responsibilityIndex}]" class="form-control" type="text" placeholder="Responsibility" minlength="4" maxlength="100" required/>
+                                             </div>`;
+
+                // Find the closest card body and append the new input element
+                $(this).closest('.card-body').find(".card-outline .card-body").append(newResponsibilityInput);
+                $(this).closest('.card-success').find('.resLastIndex').val(responsibilityIndex);
+
+            });
+            //--Add new responsibility End--//
+            //--Remove last responsibility Start--//
+            $(document).on("click", ".remove-responsibility", function () {
+                var card = $(this).closest('.card');
+                if (card.find('.card-body .form-group').length > 1) {
+                    card.find('.card-body .form-group:last').remove();
+                }
+                var responsibilityIndex = card.find('.card-body .form-group').length;
+                $(this).closest('.card-success').find('.resLastIndex').val(responsibilityIndex-1);
+            });
+            //--Remove last responsibility End--//
+
+            // //Work Experience Script End
+
+            // Project & Training Script Start
+
+            //--Add New Project Start--//
+
+            $('#add-project').click(function () {
+
+                let projectIndex = $('#project>.card').length;
+                // Create a new input element for project
+                let projectHtml = `<div class="card card-outline card-success">
+                                    <div class="card-body">
+                                        <div class="form-group form-row">
+                                        <div class="col-12 col-sm-6">
+                                            <input asp-for="ProjectUpdateModels[${projectIndex}].Id" type="hidden" />
+                                            <input name="ProjectUpdateModels[${projectIndex}].Author" class="form-control" type="text" placeholder="Company Name / Personal"/>
+                                        </div>
+                                        <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                                            <input name="ProjectUpdateModels[${projectIndex}].Name" class="form-control" type="text" placeholder="Application Project"/>
+                                        </div>
+                                        </div>
+                                        <div class="form-group">
+                                        <textarea name="ProjectUpdateModels[${projectIndex}].Description" class="form-control" rows="3" placeholder="Description"></textarea>
+                                        </div>
+                                    </div>
+                                    </div>`;
+
+                //append the new input element
+                $('#project').append(projectHtml);
+            });
+            //--Add New Project End--//
+            //--Remove last Project Start--//
+            $('#remove-project').click(function () {
+                var project = document.getElementById('project');
+                var lastCard = project.lastElementChild;
+                if (lastCard && $('#project > .card').length > 1) {
+                    project.removeChild(lastCard);
+                }
+            });
+
+            //--Remove last Project End --//
+            //--Add New Training Start--/
+
+            $('#add-training').click(function () {
+                let trainingIndex = $('#training>.form-group').length;
+                // Create a new input element for training
+                let trainingHtml = `<div class="form-group">
+                                        <input name="Trainings[${trainingIndex}]" class="form-control" type="text" placeholder="Training"  minlength="4" maxlength="100" required/>
+                                   </div>`;
+
+                //append the new input element
+                $('#training').append(trainingHtml);
+            });
+            //--Add New Training End--/
+            //--Remove last Training Start--//
+            $('#remove-training').click(function () {
+                var training = document.getElementById('training');
+                var lastCard = training.lastElementChild;
+                if (lastCard && $('#training > .form-group').length > 1) {
+                    training.removeChild(lastCard);
+                }
+            });
+
+            //--Remove last Training End --//
+            // Project & Training Script End
+
+            // Education & References Script Start
+
+
+
+            //--Add New Qualifications Start--//
+
+            $('#add-education').click(function () {
+
+                let educationIndex = $('#qualifications>.card').length;
+                // Create a new input element for project
+                let qualificationHtml = `<div class="card card-outline card-success">
+                                            <div class="card-body">
+                                            <div class="form-group">
+                                                    <input name="EducationUpdateModels[${educationIndex}].Id" type="hidden"/>
+                                                    <input name="EducationUpdateModels[${educationIndex}].University" class="form-control" type="text" placeholder="University / Institute"/>
+                                            </div>
+                                            <div class="form-group form-row">
+                                                <div class="col-12 col-sm-4">
+                                                <input name="EducationUpdateModels[${educationIndex}].Level" class="form-control" type="text" placeholder="Level / Degree"/>
+                                                </div>
+                                                <div class="col-12 col-sm-4 mt-4 mt-sm-0">
+                                                <input name="EducationUpdateModels[${educationIndex}].Grade" class="form-control" type="text" placeholder="Grade"/>
+                                                </div>
+                                                <div class="col-12 col-sm-4 mt-4 mt-sm-0">
+                                                <input name="EducationUpdateModels[${educationIndex}].PassingYear" class="form-control" type="date"/>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>`;
+
+                //append the new input element
+                $('#qualifications').append(qualificationHtml);
+            });
+            //--Add New Qualifications End--//
+            //--Remove last qualification Start--//
+            $('#remove-education').click(function () {
+                var education = document.getElementById('qualifications');
+                var lastCard = education.lastElementChild;
+                if (lastCard && $('#qualifications > .card').length > 1) {
+                    education.removeChild(lastCard);
+                }
+            });
+
+            //--Remove last qualification End --//
+
+            //--Add New Reference Start--//
+
+
+            $('#add-reference').click(function () {
+                let referenceIndex = $('#reference>.card').length;
+                // Create a new input element for project
+                let referenceHtml = `<div class="card card-outline card-success">
+                                        <div class="card-body">
+                                        <div class="form-group form-row">
+                                            <div class="col-12 col-sm-4">
+                                            <input asp-for="ReferenceUpdateModels[${referenceIndex}].Id" type="hidden" />
+                                            <input name="ReferenceUpdateModels[${referenceIndex}].Name" class="form-control" type="text" placeholder="Name"/>
+                                            </div>
+                                            <div class="col-12 col-sm-4 mt-4 mt-sm-0">
+                                            <input name="ReferenceUpdateModels[${referenceIndex}].Designation" class="form-control" type="text" placeholder="Designation"/>
+                                            </div>
+                                            <div class="col-12 col-sm-4 mt-4 mt-sm-0">
+                                            <input name="ReferenceUpdateModels[${referenceIndex}].Compnay" class="form-control" type="text" placeholder="Company"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group form-row">
+                                            <div class="col-12 col-sm-6">
+                                            <input name="ReferenceUpdateModels[${referenceIndex}].PhoneNumber" class="form-control" type="number" placeholder="Contact Number"/>
+                                            </div>
+                                            <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                                            <input name="ReferenceUpdateModels[${referenceIndex}].Email" class="form-control" type="email" placeholder="Email"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input name="ReferenceUpdateModels[${referenceIndex}].Address" class="form-control" type="text" placeholder="Address"/>
+                                        </div>
+                                        </div>
+                                    </div>`;
+
+                //append the new input element
+                $('#reference').append(referenceHtml);
+            });
+            //--Add New Reference End--//
+            //--Remove last Reference Start--//
+            $('#remove-reference').click(function () {
+                var reference = document.getElementById('reference');
+                var lastCard = reference.lastElementChild;
+                if (lastCard && $('#reference > .card').length > 1) {
+                    reference.removeChild(lastCard);
+                }
+            });
+
+            //--Remove last Reference End --//
+            // Education & References Script End
+        });
+
+    </script>
+
+    <script>
+        $('#profile-image-show').on('click', function () {
+            $('#imageCropModal').modal('show');
+        });
+    </script>
+    <!--Cropper Js -->
+    <script src="~/lib/croppieFiles/croppie.min.js"></script>
+
+    <script>
+        var basic = $('#main-cropper').croppie
+            ({
+                viewport: { width: 300, height: 300 },
+                boundary: { width: 350, height: 350 },
+                showZoomer: true,
+                enableOrientation: true,
+                format: 'png',//'jpeg'|'png'|'webp'
+            });
+
+        // Function to rotate the image 90 degrees clockwise
+        function rotateImage() {
+            $('#main-cropper').croppie('rotate', 90); // Rotate the image by 90 degrees clockwise
+        }
+
+        // Bind the "Rotate" button click event to the rotateImage function
+        $('#btnrotate').on('click', function () {
+            rotateImage();
+        });
+
+        //Reading the contents of the specified Blob or File
+        function readFile(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#main-cropper').croppie('bind', {
+                        url: e.target.result
+                    });
+
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Change Event to Read file content from File input
+        $('#select').on('change', function () { readFile(this); });
+
+        // Upload button to Post Cropped Image to Store.
+        $('#btnupload').on('click', function () {
+            const bgImage = document.getElementById('profile-image-show');
+            const profileImage = document.getElementById('profile-image-input');
+            const profileImageValidation = document.getElementById('profile-image-validation');
+            basic.croppie('result', 'canvas').then(function (canvas) {
+                bgImage.src = canvas
+            });
+            basic.croppie('result', 'blob').then(function (blob) {
+                let file = new File([blob], "profile.jpg", { type: "image/jpeg", lastModified: new Date().getTime() });
+                let container = new DataTransfer();
+                container.items.add(file);
+                profileImage.files = container.files;
+                profileImageValidation.style.display = "none";
+            });
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}

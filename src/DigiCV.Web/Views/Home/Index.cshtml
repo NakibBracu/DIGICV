@@ -1,0 +1,335 @@
+﻿@section Styles{
+    <link rel="stylesheet" href="~/css/site.css">
+    <style>
+        /*********************************************************************/
+        /* Bootstrap 4 Multiple Item Carousel */
+        /*********************************************************************/
+        /* medium - display 2  */
+        @@media (min-width: 768px) {
+
+            .carousel-inner .carousel-item-right.active,
+            .carousel-inner .carousel-item-next {
+                transform: translateX(50%);
+            }
+
+            .carousel-inner .carousel-item-left.active,
+            .carousel-inner .carousel-item-prev {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* large - display 3 */
+        @@media (min-width: 992px) {
+
+            .carousel-inner .carousel-item-right.active,
+            .carousel-inner .carousel-item-next {
+                transform: translateX(33%);
+            }
+
+            .carousel-inner .carousel-item-left.active,
+            .carousel-inner .carousel-item-prev {
+                transform: translateX(-33%);
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .carousel-inner .carousel-item>div {
+                display: none;
+            }
+
+            .carousel-inner .carousel-item>div:first-child {
+                display: block;
+            }
+        }
+
+        .carousel-inner .carousel-item.active,
+        .carousel-inner .carousel-item-next,
+        .carousel-inner .carousel-item-prev {
+            display: flex;
+        }
+
+        .carousel-inner .carousel-item-right,
+        .carousel-inner .carousel-item-left {
+            transform: translateX(0);
+        }
+
+        .service-card {
+            background-color: white;
+            color: black;
+            font: 600;
+        }
+
+            .service-card .card {
+                border-radius: 15px 15px;
+                min-height: 250px;
+            }
+
+
+            .service-card .card .card:hover {
+                transform: translateY(-5px);
+            }
+
+        .service-icon {
+            font-size: 3rem;
+            color: #007bff;
+        }
+
+        .service-card .card-body {
+            padding: 1rem;
+        }
+
+        .service-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-description {
+            color: #6c757d;
+        }
+    </style>
+}
+
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="feature-card">
+                    <div class=" bg-opacity-100 my-5">
+                        <div class="row g-0">
+                            <div class="col-md-7 px-5">
+                                <div class="card-body text-center">
+                                    <h1 class="my-4 main-heading">Build a Job Winning CV <br />and Step into <span class="text-purple">Success</span> </h1>
+                                    <h5 class="card-text">Create an impressive CV in minutes using our user-friendly CV builder. Choose from a variety of templates, customize, get PDF and Share.</h5>
+                                    <a asp-controller="Template" asp-action="Index" class="btn btn-primary px-3 py-2 my-3">Get Started</a>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <img src="images/HomeBannerImage.png" class="img-fluid rounded-start w-75 d-block mx-auto" alt="...">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+             </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div><!-- services /.container-fluid -->
+    <section class="service-card">
+        <div class="container-fluid border my-5 py-5">
+            <h2 class="font-weight-bold text-uppercase text-center mb-5">Services</h2>
+            <div class="row w-75 mx-auto">
+                <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="service-icon fas fa-file-alt"></i>
+                            <h5 class="service-title">Professional Resume Templates</h5>
+                            <p class="service-description">Choose from a variety of professional resume templates to create a standout CV.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="service-icon fas fa-envelope"></i>
+                            <h5 class="service-title">Cover Letter Builder</h5>
+                            <p class="service-description">Craft a compelling cover letter that complements your resume using our easy-to-use builder.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="service-icon fas fa-paint-brush"></i>
+                            <h5 class="service-title">Fully Flexible Design</h5>
+                            <p class="service-description">Customize the design and layout of your resume to match your personal style and preferences.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="service-icon fas fa-file-pdf"></i>
+                            <h5 class="service-title">High-quality PDF</h5>
+                            <p class="service-description">Download your resume in high-quality PDF format, ensuring a polished and professional look.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="service-icon fas fa-link"></i>
+                            <h5 class="service-title">Link Sharing</h5>
+                            <p class="service-description">Share your resume with others by providing a link, making it easy for employers to access.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="service-icon fas fa-lock"></i>
+                            <h5 class="service-title">Data Privacy</h5>
+                            <p class="service-description">Your personal information is kept secure and private with our advanced data protection measures.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!--Review section -->
+    <section class="review-carousel py-5">
+        <div class="container-fluid border bg-gradient-dark opacity-50 py-5">
+            <h2 class="font-weight-bold text-uppercase text-center my-4">Reviews</h2>
+            <div id="reviewCarousel" class="carousel slide w-100" data-ride="carousel">
+                <div class="carousel-inner w-75 ml-auto mr-auto" role="listbox">
+                    <div class="carousel-item active">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card text-center bg-dark border h-100">
+                                <div class="card-body">
+                                    <img src="images/corporate-user-icon.png" alt="User 1" class=" img-thumbnail review-user-image rounded-circle w-50 mb-3">
+                                    <div class="rating text-warning">
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                    </div>
+                                    <p class="card-text">"This CV builder is a game-changer! It made crafting my resume so much easier. Highly recommended"</p>
+                                </div>
+                                <div class="card-footer">
+                                    <p class="review-author">John Doe</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card text-center bg-dark border h-100">
+                                <div class="card-body">
+                                    <img src="images/corporate-user-icon-1.png" alt="User 1" class=" img-thumbnail review-user-image rounded-circle w-50 mb-3">
+                                    <div class="rating text-warning">
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                    </div>
+                                    <p class="card-text">"This CV builder is a game-changer! It made crafting my resume so much easier. Highly recommended"</p>
+                                </div>
+                                <div class="card-footer">
+                                    <p class="review-author">John Doe</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card text-center bg-dark border h-100">
+                                <div class="card-body">
+                                    <img src="images/corporate-user-icon.png" alt="User 1" class=" img-thumbnail review-user-image rounded-circle w-50 mb-3">
+                                    <div class="rating text-warning">
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                    </div>
+                                    <p class="card-text">"Effortless CV creation. Professional templates and quick sharing!. Highly recommended"</p>
+                                </div>
+                                <div class="card-footer">
+                                    <p class="review-author">John Doe</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card text-center bg-dark border h-100">
+                                <div class="card-body">
+                                    <img src="images/corporate-user-icon-1.png" alt="User 1" class=" img-thumbnail review-user-image rounded-circle w-50 mb-3">
+                                    <div class="rating text-warning">
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                    </div>
+                                    <p class="card-text">"The CV builder's dynamic previews allowed me to visualize my resume's appearance before finalizing it. "</p>
+                                </div>
+                                <div class="card-footer">
+                                    <p class="review-author">John Doe</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card text-center bg-dark border h-100">
+                                <div class="card-body">
+                                    <img src="images/corporate-user-icon.png" alt="User 1" class=" img-thumbnail review-user-image rounded-circle w-50 mb-3">
+                                    <div class="rating text-warning">
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                        <i class="fas fa-star star-filled"></i>
+                                    </div>
+                                    <p class="card-text">"The templates are top-notch and the customization options are fantastic. Highly recommended!"</p>
+                                </div>
+                                <div class="card-footer">
+                                    <p class="review-author">William Smith</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev bg-dark w-auto" href="#reviewCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next bg-dark w-auto" href="#reviewCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- /.content -->
+@section Scripts{
+
+    <script>
+        $('#reviewCarousel').carousel({
+            interval: 2000
+        })
+
+        $('.carousel .carousel-item').each(function () {
+            var minPerSlide = 4;
+            var next = $(this).next();
+            if (!next.length) {
+                next = $(this).siblings(':first');
+            }
+            next.children(':first-child').clone().appendTo($(this));
+
+            for (var i = 0; i < minPerSlide; i++) {
+                next = next.next();
+                if (!next.length) {
+                    next = $(this).siblings(':first');
+                }
+
+                next.children(':first-child').clone().appendTo($(this));
+            }
+        });
+
+    </script>
+}
+
+

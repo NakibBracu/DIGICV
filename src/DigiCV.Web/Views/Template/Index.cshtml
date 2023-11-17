@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "CV Template Choose";
+}
+@model TemplateListModel
+@section Styles
+{
+    <!-- template choose custom css -->
+     <link rel="stylesheet" href="~/css/templateChoose/templateChoose.css">
+}
+<br>
+<h3 style="text-align: center;"> Choose a CV template </h3>
+<div class="container d-flex justify-content-center align-items-center vh-50">
+    <div class="row">
+        <hr class="custom-hr" />
+        <div class="col-md-2">
+        </div>
+
+        @foreach(var resumeTemplate in Model.GetPopularTemplates())
+        {
+            @if (resumeTemplate.IsActive)
+            {
+                <div class="col-md-3">
+                    <h5 style="text-align: center;">@resumeTemplate.Name</h5>
+                    <div class="card">
+                        <img src="~/TemplateImage/@resumeTemplate.ImageName" class="img-fluid" alt="Template Image">
+                        <div class="centered">
+                            <a asp-controller="Builder" asp-action="Index" asp-route-id="@resumeTemplate.Id" class="btn btn-custom">Select</a>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+        }
+        <div class="col-md-1">
+        </div>
+    </div>
+</div>
