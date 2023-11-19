@@ -35,7 +35,7 @@ public class BuilderCreateModel
     [MinLength(10, ErrorMessage = "Skype Length can not be less than 6 or greater than 32")]
     [MaxLength(37, ErrorMessage = "Skype Length can not be less than 6 or greater than 32")]
     [RegularExpression(@"^(live):\w+", ErrorMessage ="Enter valid Skype (live:username)")]
-    public string Skype { get; set; }
+    public string? Skype { get; set; }
 
     [MinLength(6, ErrorMessage = "LinkedIn url Min length 6 character")]
     [MaxLength(100, ErrorMessage = "LinkedIn Length can not be less than 6 or greater than 100")]
@@ -178,19 +178,19 @@ public class EducationModel
 
 public class ExperienceModel
 {
-    [Required]
+    //[Required]
     [MinLength(2, ErrorMessage = "Min length 2 character")]
     [MaxLength(150, ErrorMessage = "Max length 150 characters")]
-    public string Position { get; set; }
-    [Required]
+    public string? Position { get; set; }
+    //[Required]
     [MinLength(2, ErrorMessage = "Min length 2 character")]
     [MaxLength(150, ErrorMessage = "Max length 150 characters")]
-    public string Companay { get; set; }
-    [DateComparison(nameof(ResignationDate), ErrorMessage ="Joining Date must be greater than Resignation Date")]
-    public DateTime JoiningDate { get; set; }
+    public string? Companay { get; set; }
+    //[DateComparison(nameof(ResignationDate), ErrorMessage ="Joining Date must be greater than Resignation Date")]
+    public DateTime? JoiningDate { get; set; }
 
-    public DateTime ResignationDate { get; set; }
-    [Required]
+    public DateTime? ResignationDate { get; set; }
+    //[Required]
     public IList<string>? Responsibilities { get; set; }
 }
 

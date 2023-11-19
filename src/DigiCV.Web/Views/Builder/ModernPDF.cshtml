@@ -143,7 +143,7 @@
                         </div>
                     }
 
-                    @if (Model.ResumeProperty.Experiences.Count != 0)
+                    @if (Model.ResumeProperty.Experiences != null && Model.ResumeProperty.Experiences.Any(experience => experience != null && !string.IsNullOrEmpty(experience.Position)))
                     {
                         <h4 class="font-weight-bold" style="color: #003147; font-size: 1.6em; letter-spacing: 1px;">
                             EXPERIENCE
@@ -152,7 +152,7 @@
                             @foreach (var experience in Model.ResumeProperty.Experiences)
                             {
                                 <div class="col-md-4 text-secondary">
-                                    <h5><small>@experience.JoiningDate.ToShortDateString() - @experience.ResignationDate.ToShortDateString()</small></h5>
+                                    <h5><small>@experience.JoiningDate?.Date.ToString() - @experience.ResignationDate?.Date.ToString()</small></h5>
                                     <h5 class="text-uppercase"><small>@experience.Companay</small></h5>
                                 </div>
                                 <div class="col-md-8">
@@ -196,7 +196,7 @@
 
                     }
 
-                    @if (Model.ResumeProperty.Trainings.Count != 0)
+                    @if (Model.ResumeProperty.Trainings != null && Model.ResumeProperty.Trainings.Any(training => !string.IsNullOrEmpty(training)))
                     {
                         <div class="pt-5">
                             <h4 class="font-weight-bold mb-3"

@@ -286,20 +286,20 @@ public class EducationUpdateModel
 public class ExperienceUpdateModel
 {
     public int? Id { get; set; }
-    [Required]
+    //[Required]
     [MinLength(2, ErrorMessage = "Min length 2 character")]
     [MaxLength(150, ErrorMessage = "Max length 150 characters")]
-    public string Position { get; set; }
-    [Required]
+    public string? Position { get; set; }
+    //[Required]
     [MinLength(2, ErrorMessage = "Min length 2 character")]
     [MaxLength(150, ErrorMessage = "Max length 150 characters")]
     [Display(Name ="Company")]
-    public string Companay { get; set; }
-    [DateComparison(nameof(ResignationDate), ErrorMessage = "Joining Date must be greater than Resignation Date")]
-    public DateTime JoiningDate { get; set; }
+    public string? Companay { get; set; }
+   // [DateComparison(nameof(ResignationDate), ErrorMessage = "Joining Date must be greater than Resignation Date")]
+    public DateTime? JoiningDate { get; set; }
 
-    public DateTime ResignationDate { get; set; }
-    [Required]
+    public DateTime? ResignationDate { get; set; }
+    //[Required]
     public IList<string>? Responsibilities { get; set; }
 }
 

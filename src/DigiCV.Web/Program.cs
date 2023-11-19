@@ -46,6 +46,9 @@ try
         cb.RegisterModule(new WebModule());
 
     });
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+      options.UseSqlServer(connectionString,
+      (x) => x.MigrationsAssembly(migrationAssembly)));
 
     // Add services to the container. 
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

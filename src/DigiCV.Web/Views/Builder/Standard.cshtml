@@ -278,7 +278,7 @@
 
                 }
 
-                @if (Model.ResumeProperty.Experiences.Count != 0)
+                @if (Model.ResumeProperty.Experiences != null && Model.ResumeProperty.Experiences.Any(experience => experience != null && !string.IsNullOrEmpty(experience.Position)))
                 {
                     <!-- New section for Working Experience  -->
                     <div class="section-content-4 mt-1">
@@ -290,8 +290,8 @@
                                 <div class="col-md-12 mt-3">
                                     <h5><strong>@experience.Position</strong></h5>
                                     <p>
-                                        <span style="float: left;">@experience.Companay - @experience.JoiningDate.ToShortDateString()</span>
-                                        <span style="float: right;">@experience.ResignationDate.ToShortDateString()</span>
+                                        <span style="float: left;">@experience.Companay - @experience.JoiningDate?.Date.ToString()</span>
+                                        <span style="float: right;">@experience.ResignationDate?.Date.ToString()</span>
                                         <div style="clear: both;"></div>
                                     </p>
                                     <ul class="text-justify">
@@ -344,7 +344,7 @@
                 }
 
 
-                @if (Model.ResumeProperty.Trainings.Count != 0)
+                @if (Model.ResumeProperty.Trainings != null && Model.ResumeProperty.Trainings.Any(training => !string.IsNullOrEmpty(training)))
                 {
                     <!-- New section for Professional Training  -->
                     <div class="section-content-6 mt-4">

@@ -4,76 +4,116 @@ using DigiCV.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DigiCV.Web.Data.Migrations
+namespace DigiCV.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231003190311_EmailsTable")]
-    partial class EmailsTable
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.10")
+                .HasAnnotation("ProductVersion", "7.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DigiCV.Domain.Entities.Cv", b =>
+            modelBuilder.Entity("DigiCV.Domain.Entities.Contact", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("ApplicationUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FullName")
+                    b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImgUrl")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LinkedIn")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Skype")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Summary")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trainings")
+                    b.Property<string>("Subject")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.ToTable("Contact");
+                });
 
-                    b.ToTable("Cv");
+            modelBuilder.Entity("DigiCV.Domain.Entities.CoverLetter", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Recipient")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecipientAddressing")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderAddressEx")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderPhone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SendingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CoverLetters");
                 });
 
             modelBuilder.Entity("DigiCV.Domain.Entities.Education", b =>
@@ -83,9 +123,6 @@ namespace DigiCV.Web.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("CvId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Grade")
                         .IsRequired()
@@ -98,13 +135,16 @@ namespace DigiCV.Web.Data.Migrations
                     b.Property<DateTime>("PassingYear")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("ResumeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("University")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CvId");
+                    b.HasIndex("ResumeId");
 
                     b.ToTable("Education");
                 });
@@ -119,18 +159,18 @@ namespace DigiCV.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("From")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsSent")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Subject")
+                    b.Property<string>("ReceiverEmail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("To")
+                    b.Property<string>("ReceiverName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -148,28 +188,26 @@ namespace DigiCV.Web.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Companay")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CvId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("JoiningDate")
+                    b.Property<DateTime?>("JoiningDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Position")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ResignationDate")
+                    b.Property<DateTime?>("ResignationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Responsibilities")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("ResumeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CvId");
+                    b.HasIndex("ResumeId");
 
                     b.ToTable("Experience");
                 });
@@ -186,9 +224,6 @@ namespace DigiCV.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CvId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -197,9 +232,12 @@ namespace DigiCV.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("ResumeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CvId");
+                    b.HasIndex("ResumeId");
 
                     b.ToTable("Project");
                 });
@@ -220,9 +258,6 @@ namespace DigiCV.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CvId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Designation")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -235,14 +270,128 @@ namespace DigiCV.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ResumeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CvId");
+                    b.HasIndex("ResumeId");
 
                     b.ToTable("Reference");
+                });
+
+            modelBuilder.Entity("DigiCV.Domain.Entities.Resume", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LinkedIn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ResumeTemplateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Skype")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Trainings")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UserId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResumeTemplateId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Resume");
+                });
+
+            modelBuilder.Entity("DigiCV.Domain.Entities.ResumeSkill", b =>
+                {
+                    b.Property<Guid>("ResumeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("SkillId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ResumeId", "SkillId");
+
+                    b.HasIndex("SkillId");
+
+                    b.ToTable("ResumeSkill");
+                });
+
+            modelBuilder.Entity("DigiCV.Domain.Entities.ResumeTemplate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ResumeTemplate");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("933b1bdb-19df-4e24-bf1f-49f5abd8aef6"),
+                            ImageName = "34a90fa4-ce8a-499c-8182-852a7125141f.png",
+                            IsActive = true,
+                            Name = "Modern"
+                        },
+                        new
+                        {
+                            Id = new Guid("933b1bdb-19df-4e24-bf1f-49f5abd8aef7"),
+                            ImageName = "22ce39f1-a576-4e66-a9b3-312552c95dde.png",
+                            IsActive = true,
+                            Name = "Standard"
+                        });
                 });
 
             modelBuilder.Entity("DigiCV.Domain.Entities.Skill", b =>
@@ -260,21 +409,79 @@ namespace DigiCV.Web.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Skill");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = ".Net Core, Web API, NodeJs"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Asp.net, .Net MVC"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "C#, VB.Net"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "LINQ, SQL, Entity Framework and MongoDB"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Angular 6, Angular 1 and MEAN Stack"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Javascript, JQuery and Ajax"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Bootstrap CSS, HTML"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Crystal and RDLC Report"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Design Pattern & Principles, OOP Software Design& Architecture"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "TFS, GIT, V. SourceSafe, Trello, Agile, SCRUM"
+                        });
                 });
 
-            modelBuilder.Entity("DigiCV.Domain.Entities.SkillCv", b =>
+            modelBuilder.Entity("DigiCV.Domain.Entities.Template", b =>
                 {
-                    b.Property<Guid>("CvId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("SkillId")
-                        .HasColumnType("int");
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CvId", "SkillId");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
-                    b.HasIndex("SkillId");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("SkillCv");
+                    b.HasKey("Id");
+
+                    b.ToTable("Template");
                 });
 
             modelBuilder.Entity("DigiCV.Domain.Entities.UserProfile", b =>
@@ -320,6 +527,7 @@ namespace DigiCV.Web.Data.Migrations
                             Education = "Mawlana Bhashani Science and Technology University, Tangail",
                             Experience = "C#, ASP.NET, EF Core",
                             GithubUsername = "absa1am",
+                            ImageUrl = "24fc78b6-8f28-468f-9476-e21e4cfaca6b.png",
                             IsActive = true,
                             LinkedInUsername = "absa1am"
                         },
@@ -331,6 +539,7 @@ namespace DigiCV.Web.Data.Migrations
                             Education = "Mawlana Bhashani Science and Technology University, Tangail",
                             Experience = "C#, ASP.NET, EF Core",
                             GithubUsername = "absa1am",
+                            ImageUrl = "6d0bcabd-744c-4bdd-8e69-8f30088c984d.png",
                             IsActive = true,
                             LinkedInUsername = "absa1am"
                         });
@@ -469,40 +678,40 @@ namespace DigiCV.Web.Data.Migrations
                         {
                             Id = new Guid("e26967f0-ce4c-4c14-8a0b-45beb8c9eb48"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7dc50426-639f-492d-b579-38b3a8786fe6",
+                            ConcurrencyStamp = "ed8ae96b-d0a9-4fbc-8479-3b5e24381770",
                             Email = "admin@digicv.com",
                             EmailConfirmed = true,
                             FullName = "Admin",
-                            JoiningDate = new DateTime(2023, 10, 4, 1, 3, 10, 561, DateTimeKind.Local).AddTicks(7847),
+                            JoiningDate = new DateTime(2023, 11, 19, 13, 51, 27, 423, DateTimeKind.Local).AddTicks(3374),
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@DIGICV.COM",
-                            NormalizedUserName = "ADMIN@DIGICV.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEB20grptU/I4oN3D+m3vl1pAeSoxoiAuxF7j01KpGqXcCn4EBUs7FgrF3/hdtFkc3w==",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFltHxV5yFNqfASdKXjqWRMRHsQZ5aGBNxM9SNOzvMbiyYNOvIay6d0cgKpsty2nkQ==",
                             PhoneNumber = "+8801856817465",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "BFCC7B453A8B4B6C8A4C93EE28A3B4A8",
                             TwoFactorEnabled = false,
-                            UserName = "admin@digicv.com",
+                            UserName = "admin",
                             UserProfileId = new Guid("9749e4e1-f89c-42bd-8a04-5a79993a58f9")
                         },
                         new
                         {
                             Id = new Guid("5f4c76d3-79b0-4923-86a7-511ac60c2ab9"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "20e5fb16-6ee5-4625-813f-c8a783fda185",
+                            ConcurrencyStamp = "2bdf3da3-1843-42c8-8777-59a02bde2571",
                             Email = "manager@digicv.com",
                             EmailConfirmed = true,
                             FullName = "Manager",
-                            JoiningDate = new DateTime(2023, 10, 4, 1, 3, 10, 633, DateTimeKind.Local).AddTicks(5301),
+                            JoiningDate = new DateTime(2023, 11, 19, 13, 51, 27, 493, DateTimeKind.Local).AddTicks(874),
                             LockoutEnabled = true,
                             NormalizedEmail = "MANAGER@DIGICV.COM",
-                            NormalizedUserName = "MANAGER@DIGICV.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDiZgn6y/nHsudX0cvbxDZrsDOjgZm3lA2J098OVNhYmtTY8+S5eyi7vsPDpV0N5tQ==",
+                            NormalizedUserName = "MANAGER",
+                            PasswordHash = "AQAAAAIAAYagAAAAEElPzYWbH5F+527CwVGmuF1zE3CfgGVZ4CkFXhMLlFHDz9XxL/dfZ2KHPFMhUHxUUw==",
                             PhoneNumber = "+8801856817465",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "FC37C84E276C4D978DF9054129D0CB23",
                             TwoFactorEnabled = false,
-                            UserName = "manager@digicv.com",
+                            UserName = "manager",
                             UserProfileId = new Guid("a618e70b-3cdb-420a-a1b3-702d0b06e9c2")
                         });
                 });
@@ -602,72 +811,87 @@ namespace DigiCV.Web.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("DigiCV.Domain.Entities.Cv", b =>
+            modelBuilder.Entity("DigiCV.Domain.Entities.CoverLetter", b =>
                 {
                     b.HasOne("DigiCV.Persistence.Features.Membership.ApplicationUser", null)
-                        .WithMany("Cvs")
-                        .HasForeignKey("ApplicationUserId");
+                        .WithMany("Letters")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DigiCV.Domain.Entities.Education", b =>
                 {
-                    b.HasOne("DigiCV.Domain.Entities.Cv", "Cv")
+                    b.HasOne("DigiCV.Domain.Entities.Resume", "Resume")
                         .WithMany("Educations")
-                        .HasForeignKey("CvId")
+                        .HasForeignKey("ResumeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cv");
+                    b.Navigation("Resume");
                 });
 
             modelBuilder.Entity("DigiCV.Domain.Entities.Experience", b =>
                 {
-                    b.HasOne("DigiCV.Domain.Entities.Cv", "Cv")
+                    b.HasOne("DigiCV.Domain.Entities.Resume", "Resume")
                         .WithMany("Experiences")
-                        .HasForeignKey("CvId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ResumeId");
 
-                    b.Navigation("Cv");
+                    b.Navigation("Resume");
                 });
 
             modelBuilder.Entity("DigiCV.Domain.Entities.Project", b =>
                 {
-                    b.HasOne("DigiCV.Domain.Entities.Cv", "Cv")
+                    b.HasOne("DigiCV.Domain.Entities.Resume", "Resume")
                         .WithMany("Projects")
-                        .HasForeignKey("CvId")
+                        .HasForeignKey("ResumeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cv");
+                    b.Navigation("Resume");
                 });
 
             modelBuilder.Entity("DigiCV.Domain.Entities.Reference", b =>
                 {
-                    b.HasOne("DigiCV.Domain.Entities.Cv", "Cv")
+                    b.HasOne("DigiCV.Domain.Entities.Resume", "Resume")
                         .WithMany("References")
-                        .HasForeignKey("CvId")
+                        .HasForeignKey("ResumeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cv");
+                    b.Navigation("Resume");
                 });
 
-            modelBuilder.Entity("DigiCV.Domain.Entities.SkillCv", b =>
+            modelBuilder.Entity("DigiCV.Domain.Entities.Resume", b =>
                 {
-                    b.HasOne("DigiCV.Domain.Entities.Cv", "Cv")
+                    b.HasOne("DigiCV.Domain.Entities.ResumeTemplate", "ResumeTemplate")
+                        .WithMany("Resumes")
+                        .HasForeignKey("ResumeTemplateId");
+
+                    b.HasOne("DigiCV.Persistence.Features.Membership.ApplicationUser", null)
+                        .WithMany("Resumes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ResumeTemplate");
+                });
+
+            modelBuilder.Entity("DigiCV.Domain.Entities.ResumeSkill", b =>
+                {
+                    b.HasOne("DigiCV.Domain.Entities.Resume", "Resume")
                         .WithMany("Skills")
-                        .HasForeignKey("CvId")
+                        .HasForeignKey("ResumeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DigiCV.Domain.Entities.Skill", "Skill")
-                        .WithMany("Cvs")
+                        .WithMany("Resumes")
                         .HasForeignKey("SkillId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cv");
+                    b.Navigation("Resume");
 
                     b.Navigation("Skill");
                 });
@@ -734,7 +958,7 @@ namespace DigiCV.Web.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DigiCV.Domain.Entities.Cv", b =>
+            modelBuilder.Entity("DigiCV.Domain.Entities.Resume", b =>
                 {
                     b.Navigation("Educations");
 
@@ -747,14 +971,21 @@ namespace DigiCV.Web.Data.Migrations
                     b.Navigation("Skills");
                 });
 
+            modelBuilder.Entity("DigiCV.Domain.Entities.ResumeTemplate", b =>
+                {
+                    b.Navigation("Resumes");
+                });
+
             modelBuilder.Entity("DigiCV.Domain.Entities.Skill", b =>
                 {
-                    b.Navigation("Cvs");
+                    b.Navigation("Resumes");
                 });
 
             modelBuilder.Entity("DigiCV.Persistence.Features.Membership.ApplicationUser", b =>
                 {
-                    b.Navigation("Cvs");
+                    b.Navigation("Letters");
+
+                    b.Navigation("Resumes");
                 });
 #pragma warning restore 612, 618
         }

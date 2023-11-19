@@ -203,7 +203,7 @@
                         @foreach (var experience in Model.ResumeProperty.Experiences)
                         {
                             <div class="col-md-4 text-secondary">
-                                <h5><small>@experience.JoiningDate.ToShortDateString() - @experience.ResignationDate.ToShortDateString()</small></h5>
+                                <h5><small>@experience.JoiningDate?.Date.ToString() - @experience.ResignationDate?.Date.ToString()</small></h5>
                                 <h5 class="text-uppercase"><small>@experience.Companay</small></h5>
                             </div>
                             <div class="col-md-8">
