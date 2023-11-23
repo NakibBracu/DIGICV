@@ -37,6 +37,13 @@
 6. **Contact Messages Inbox [The messages that has been sent by user via contact us page]** ![34_Contact_Messages](https://github.com/NakibBracu/DIGICV/assets/77340620/bb73e515-89b7-4ecd-ac32-66607a7db84a)
 # Test Case Run [Using NUnit Framework]-[Total 35 Test cases Written]
 ![35_Test_Cases_Run](https://github.com/NakibBracu/DIGICV/assets/77340620/e4527a7f-1322-47dc-adf8-885f733e49f0)
+# Docker 
+1.  **Docker command for running the container**  ![Docker command full snap](https://github.com/NakibBracu/DIGICV/assets/77340620/f4d08fb1-5e86-4806-b1b5-71622fe590f1)
+2. **Docker Desktop containers running** ![docker desktop running containers](https://github.com/NakibBracu/DIGICV/assets/77340620/78a0613a-3cbe-4cf0-949e-f5e52ec57e25)
+3. **Docker Desktop volumes** ![docker desktop volumes](https://github.com/NakibBracu/DIGICV/assets/77340620/aea92015-8a8b-41ca-bdb2-7a60d12137eb)
+4. **Web Project running with docker in 8000 port** ![web running browser](https://github.com/NakibBracu/DIGICV/assets/77340620/ac85cbe9-5da4-4a62-9607-1908554556a2)
+5. **API Project running with docker in 9000 port** ![api running browser](https://github.com/NakibBracu/DIGICV/assets/77340620/92e2812d-165c-4820-b5a7-e930596c6898)
+
 
 
 
